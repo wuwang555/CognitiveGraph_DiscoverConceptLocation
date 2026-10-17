@@ -1,0 +1,2 @@
+git results/Fresults/animations/** filter=lfs diff=lfs merge=lfs -text
+results/Fresults/animations/* filter=lfs diff=lfs merge=lfs -text

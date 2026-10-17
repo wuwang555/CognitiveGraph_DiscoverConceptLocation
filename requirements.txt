@@ -1,0 +1,51 @@
+# 🧠 Cognitive Graph Theory - Project Dependency List
+# ===================================================
+# All Python packages required to run this project and their minimum versions
+# Installation command: pip install -r requirements.txt
+# ===================================================
+
+# Core scientific computing libraries
+numpy>=1.26.4                # Array computing and linear algebra
+pandas>=2.2.2                # DataFrame operations and CSV/Excel handling
+scipy>=1.13.1                # Scientific computing and sparse matrices
+
+# Graph and network analysis
+networkx>=3.4.2              # Graph creation and analysis
+
+# Data visualization
+matplotlib>=3.8.4            # Basic plotting library, used to generate all charts
+
+# File format support
+openpyxl>=3.1.0              # Read/write Excel files (.xlsx format)
+
+# Chinese natural language processing
+jieba>=0.42.1                # Chinese word segmentation tool (used for concept processing)
+
+# ===================================================
+# Optional development dependencies (recommended)
+# ===================================================
+# Installation command: pip install -r requirements-dev.txt
+
+# Testing and validation
+pytest>=7.4.4                # Unit testing framework
+pytest-cov>=4.0.0            # Test coverage
+
+# Code quality
+black>=24.4.2                # Code formatting
+flake8>=7.0.0                # Code style checking
+mypy>=1.10.0                 # Static type checking
+
+# Documentation generation
+sphinx>=7.3.7                # Documentation generator
+sphinx-rtd-theme>=1.0.0      # Documentation theme
+
+# Advanced visualization (optional)
+seaborn>=0.11.0              # Statistical chart beautification
+plotly>=5.22.0               # Interactive charts
+
+# ===================================================
+# Known version compatibility notes
+# ===================================================
+# The following version combinations have been tested:
+# numpy==1.23.5 + networkx==2.8.8 + scipy==1.9.3
+# matplotlib==3.6.2 + pandas==1.5.1 + jieba==0.42.1

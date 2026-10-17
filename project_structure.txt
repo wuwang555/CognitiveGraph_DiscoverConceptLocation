@@ -1,0 +1,133 @@
+C:.
+│  .gitignore
+│  config.py
+│  LICENSE
+│  README.md
+│  README_zh.md
+│  requirements.txt
+│  run_experiments.py
+│
+├─paper
+│  └─Manuscript
+│      │  CognitiveGraph.tex
+│      │  references.bib
+│      │
+│      └─figures
+│              cognitive_graph_three_stages.png
+│              cognitive_graph_three_stages_zh.png
+│
+├─results
+│  │  111_concepts.xlsx
+│  │  51_concepts.xlsx
+│  │  71_concepts.xlsx
+│  │  91_concepts.xlsx
+│  │  DATA_DICTIONARY.md
+│  │
+│  ├─algebra
+│  │      algebra_validation_results_20260320_111020.json
+│  │
+│  ├─analysis
+│  │  ├─add_scan
+│  │  │      threshold_scan_plot.png
+│  │  │      threshold_scan_results.json
+│  │  │
+│  │  ├─objective_metrics
+│  │  │  │  individual_summary_20260320_111042.json
+│  │  │  │  zipf_center_result_20260320_111042.json
+│  │  │  │  zipf_node_total_result_20260320_111042.json
+│  │  │  │
+│  │  │  └─figures
+│  │  │          energy_rate_scale51_ind0_20260320_111042.png
+│  │  │          zipf_center_20260320_111042.png
+│  │  │          zipf_node_total_20260320_111042.png
+│  │  │
+│  │  └─potential_analysis
+│  │          potential_dist_scale51.png
+│  │          potential_dist_scale71.png
+│  │          potential_dist_scale91.png
+│  │          potential_dist_scale111.png
+│  │          potential_trend.png
+│  │
+│  ├─batch_experiments
+│  │      config_20260320_105541.json
+│  │      detailed_results_20260320_105541.csv
+│  │      summary_20260320_105541.json
+│  │
+│  ├─emergence
+│  │  │  emergence_51_concepts_20260320_110735.json
+│  │  │  emergence_71_concepts_20260320_110811.json
+│  │  │  emergence_91_concepts_20260320_110901.json
+│  │  │  emergence_111_concepts_20260320_111015.json
+│  │  │
+│  │  └─figures
+│  │          emergence_visualization_20260320_110633.png
+│  │          emergence_visualization_20260320_110711.png
+│  │
+│  ├─population
+│  │      energy_history_个体_1_20260320_105557.csv
+│  │      energy_history_个体_2_20260320_105557.csv
+│  │
+│  ├─semantic_network
+│  │      semantic_network_20260320_111029.png
+│  │
+│  └─visualizations
+│          cognitive_graph_20260320_105541.png
+│          cognitive_states_20260320_105541.png
+│          semantic_network_20260320_105541.png
+│
+└─src
+    │  main.py
+    │
+    ├─algebra
+    │      algebra_experiments.py
+    │      cognitive_semigroup.py
+    │      cognitive_symmetry.py
+    │      group_action.py
+    │      integration.py
+    │      lie_group_cognitive.py
+    │      __init__.py
+    │
+    ├─analysis
+    │      analyze_wallas_phases.py
+    │      benchmark_with_without_detection.py
+    │      run_potential_analysis.py
+    │      run_potential_analysis_en.py
+    │      threshold_scan.py
+    │      __init__.py
+    │
+    ├─core
+    │      cognitive_graph.py
+    │      cognitive_states.py
+    │      semantic_network.py
+    │      __init__.py
+    │
+    ├─emergence
+    │      detector_fixed.py
+    │      metrics.py
+    │      observer.py
+    │      universe.py
+    │      universe_enhanced.py
+    │      __init__.py
+    │
+    ├─experiments
+    │      batch_experiments.py
+    │      emergence_study_fixed.py
+    │      population_study.py
+    │      __init__.py
+    │
+    ├─models
+    │      enhanced_model.py
+    │      qlearning_enhanced.py
+    │      random_network.py
+    │      __init__.py
+    │
+    ├─py_figure_maker
+    │      3D_Graph_show.py
+    │      concept_compress_show2.py
+    │      Graphical_Abstract.py
+    │
+    └─utils
+            analysis.py
+            individual_variation.py
+            visualization.py
+            __init__.py
