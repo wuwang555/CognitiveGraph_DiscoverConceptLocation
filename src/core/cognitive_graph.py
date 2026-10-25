@@ -13,7 +13,7 @@ import math
 from collections import defaultdict
 from typing import Dict, Any, List, Optional, Tuple
 
-from core.cognitive_states import CognitiveState, CognitiveStateManager
+from src.core.cognitive_states import CognitiveState, CognitiveStateManager
 
 np.random.seed(42)
 random.seed(42)
@@ -593,12 +593,12 @@ class BaseCognitiveGraph:
 
     def visualize_energy_convergence(self) -> None:
         """Visualize the energy convergence process (requires matplotlib and appropriate implementation)."""
-        from utils.visualization import visualize_energy_convergence
+        from src.utils.visualization import visualize_energy_convergence
         visualize_energy_convergence(self.energy_history, self.concept_centers)
 
     def visualize_cognitive_states(self) -> None:
         """Visualize cognitive state change history."""
-        from utils.visualization import visualize_cognitive_states
+        from src.utils.visualization import visualize_cognitive_states
         for i, entry in enumerate(self.cognitive_energy_history):
             if 'iteration' not in entry:
                 entry['iteration'] = i
@@ -606,7 +606,7 @@ class BaseCognitiveGraph:
 
     def visualize_graph(self, title: str = "Cognitive Graph", figsize: Tuple[int, int] = (12, 8)) -> None:
         """Visualize the current cognitive graph structure."""
-        from utils.visualization import visualize_graph
+        from src.utils.visualization import visualize_graph
         visualize_graph(self.G, self.concept_centers, title, figsize)
 
 

@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 生成认知图论论文图文摘要的三阶段图（回调阈值 + 英文节点版）
-直接使用 CognitiveUniverseEnhanced 的演化模型，检测阈值从 config 导入，
+直接使用 CognitiveUniverseEnhanced 的演化模型，检测阈值从 configB.md 导入，
 节点标签显示为英文，便于国际化展示。
 """
 
@@ -112,11 +112,11 @@ MIGRATION_COLORS = ['#FF4500', '#9400D3', '#2E8B57', '#FF69B4']
 
 class VisualizableUniverse(CognitiveUniverseEnhanced):
     """
-    可可视化的认知宇宙，检测阈值从 config 导入，确保与论文实验一致。
+    可可视化的认知宇宙，检测阈值从 configB.md 导入，确保与论文实验一致。
     """
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # 从 config 导入检测阈值
+        # 从 configB.md 导入检测阈值
         adjusted_thresholds = {
             'compression_synergy': 0.76,          # 原 0.76
             'migration_efficiency': 0.35,          # 原 0.35
@@ -137,7 +137,7 @@ class VisualizableUniverse(CognitiveUniverseEnhanced):
         """
         重写演化方法，在 capture_iterations 指定的迭代步保存网络快照。
         """
-        print(f"开始演化: {iterations}次迭代，检测间隔 {detection_interval} (阈值来自 config)")
+        print(f"开始演化: {iterations}次迭代，检测间隔 {detection_interval} (阈值来自 configB.md)")
 
         # 初始快照
         self._capture_snapshot(0)

@@ -7,7 +7,7 @@ import networkx as nx
 import numpy as np
 import random
 from typing import Dict, Any, List, Tuple
-from core.cognitive_graph import BaseCognitiveGraph
+from src.core.cognitive_graph import BaseCognitiveGraph
 
 np.random.seed(42)
 random.seed(42)

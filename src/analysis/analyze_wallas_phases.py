@@ -29,8 +29,8 @@ from collections import Counter
 # Add project root to path
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from emergence.universe_enhanced import CognitiveUniverseEnhanced
-from utils.individual_variation import IndividualVariation, create_enhanced_individual_params
+from src.emergence.universe_enhanced import CognitiveUniverseEnhanced
+from src.utils.individual_variation import IndividualVariation, create_enhanced_individual_params
 from config import BASE_PARAMETERS, VARIATION_RANGES
 
 # Set Chinese font (if available)

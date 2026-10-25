@@ -9,7 +9,7 @@ import networkx as nx
 import numpy as np
 import os
 from datetime import datetime
-from core.cognitive_states import CognitiveState
+from src.core.cognitive_states import CognitiveState
 
 # Get current timestamp (generated once at module load to ensure consistent filenames within the same batch)
 _TIMESTAMP = datetime.now().strftime("%Y%m%d_%H%M%S")

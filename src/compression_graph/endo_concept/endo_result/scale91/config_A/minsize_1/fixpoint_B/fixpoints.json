@@ -1,0 +1,592 @@
+[
+  {
+    "core": [
+      "牛顿定律"
+    ],
+    "support": 0.34225195094760313,
+    "count": 307,
+    "stability": 0.7133550488599348,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "相对论"
+    ],
+    "support": 0.33221850613154963,
+    "count": 298,
+    "stability": 0.6946308724832215,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "动量"
+    ],
+    "support": 0.29654403567447046,
+    "count": 266,
+    "stability": 0.7105263157894737,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "能量守恒"
+    ],
+    "support": 0.24972129319955408,
+    "count": 224,
+    "stability": 0.6919642857142857,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "力学"
+    ],
+    "support": 0.23745819397993312,
+    "count": 213,
+    "stability": 1.0,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "静电力"
+    ],
+    "support": 0.2084726867335563,
+    "count": 187,
+    "stability": 1.0,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "量子力学"
+    ],
+    "support": 0.1939799331103679,
+    "count": 174,
+    "stability": 0.5919540229885057,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "运动学"
+    ],
+    "support": 0.18617614269788182,
+    "count": 167,
+    "stability": 1.0,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "操作系统"
+    ],
+    "support": 0.17279821627647715,
+    "count": 155,
+    "stability": 0.567741935483871,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "摩擦力"
+    ],
+    "support": 0.16610925306577481,
+    "count": 149,
+    "stability": 1.0,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "万有引力"
+    ],
+    "support": 0.16499442586399107,
+    "count": 148,
+    "stability": 1.0,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "算法"
+    ],
+    "support": 0.16499442586399107,
+    "count": 148,
+    "stability": 0.5878378378378378,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "智能体"
+    ],
+    "support": 0.13712374581939799,
+    "count": 123,
+    "stability": 0.5772357723577236,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "神经递质"
+    ],
+    "support": 0.13489409141583056,
+    "count": 121,
+    "stability": 0.9586776859504132,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "宇宙学"
+    ],
+    "support": 0.13154960981047936,
+    "count": 118,
+    "stability": 1.0,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "前额叶皮层"
+    ],
+    "support": 0.13043478260869565,
+    "count": 117,
+    "stability": 0.811965811965812,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "神经元"
+    ],
+    "support": 0.12931995540691194,
+    "count": 116,
+    "stability": 0.5948275862068966,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "深度学习"
+    ],
+    "support": 0.12486064659977704,
+    "count": 112,
+    "stability": 1.0,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "迁移学习"
+    ],
+    "support": 0.12263099219620958,
+    "count": 110,
+    "stability": 1.0,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "数据结构"
+    ],
+    "support": 0.12263099219620958,
+    "count": 110,
+    "stability": 1.0,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "人机交互"
+    ],
+    "support": 0.12151616499442586,
+    "count": 109,
+    "stability": 1.0,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "神经可塑性"
+    ],
+    "support": 0.11928651059085842,
+    "count": 107,
+    "stability": 0.8878504672897196,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "统计力学"
+    ],
+    "support": 0.11259754738015608,
+    "count": 101,
+    "stability": 1.0,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "生成对抗网络"
+    ],
+    "support": 0.11148272017837235,
+    "count": 100,
+    "stability": 0.89,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "数据挖掘"
+    ],
+    "support": 0.10367892976588629,
+    "count": 93,
+    "stability": 1.0,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "强化学习"
+    ],
+    "support": 0.10256410256410256,
+    "count": 92,
+    "stability": 0.5869565217391305,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "量子场论"
+    ],
+    "support": 0.09141583054626533,
+    "count": 82,
+    "stability": 1.0,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "电磁学"
+    ],
+    "support": 0.09141583054626533,
+    "count": 82,
+    "stability": 1.0,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "分布式系统"
+    ],
+    "support": 0.0903010033444816,
+    "count": 81,
+    "stability": 1.0,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "软件工程"
+    ],
+    "support": 0.08807134894091416,
+    "count": 79,
+    "stability": 1.0,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "信息安全"
+    ],
+    "support": 0.08361204013377926,
+    "count": 75,
+    "stability": 1.0,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "机器人学"
+    ],
+    "support": 0.0802675585284281,
+    "count": 72,
+    "stability": 1.0,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "热力学"
+    ],
+    "support": 0.07915273132664437,
+    "count": 71,
+    "stability": 1.0,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "数据库"
+    ],
+    "support": 0.07803790412486064,
+    "count": 70,
+    "stability": 1.0,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "物联网"
+    ],
+    "support": 0.07692307692307693,
+    "count": 69,
+    "stability": 1.0,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "海马体"
+    ],
+    "support": 0.07023411371237458,
+    "count": 63,
+    "stability": 1.0,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "镜像神经元"
+    ],
+    "support": 0.07023411371237458,
+    "count": 63,
+    "stability": 0.7301587301587301,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "神经编码"
+    ],
+    "support": 0.06577480490523968,
+    "count": 59,
+    "stability": 1.0,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "突触"
+    ],
+    "support": 0.06465997770345597,
+    "count": 58,
+    "stability": 1.0,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "功能磁共振"
+    ],
+    "support": 0.059085841694537344,
+    "count": 53,
+    "stability": 1.0,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "心理理论"
+    ],
+    "support": 0.057971014492753624,
+    "count": 52,
+    "stability": 1.0,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "自然语言处理"
+    ],
+    "support": 0.057971014492753624,
+    "count": 52,
+    "stability": 1.0,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "云计算"
+    ],
+    "support": 0.057971014492753624,
+    "count": 52,
+    "stability": 1.0,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "计算机视觉"
+    ],
+    "support": 0.054626532887402456,
+    "count": 49,
+    "stability": 1.0,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "专家系统"
+    ],
+    "support": 0.04905239687848383,
+    "count": 44,
+    "stability": 1.0,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "认知神经科学"
+    ],
+    "support": 0.04793756967670011,
+    "count": 43,
+    "stability": 1.0,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "脑电图"
+    ],
+    "support": 0.04793756967670011,
+    "count": 43,
+    "stability": 1.0,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "计算机网络"
+    ],
+    "support": 0.046822742474916385,
+    "count": 42,
+    "stability": 1.0,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "模式识别"
+    ],
+    "support": 0.046822742474916385,
+    "count": 42,
+    "stability": 1.0,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "具身认知"
+    ],
+    "support": 0.045707915273132664,
+    "count": 41,
+    "stability": 1.0,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "认知负荷"
+    ],
+    "support": 0.043478260869565216,
+    "count": 39,
+    "stability": 0.6153846153846154,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "元认知"
+    ],
+    "support": 0.042363433667781496,
+    "count": 38,
+    "stability": 1.0,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "社会认知"
+    ],
+    "support": 0.042363433667781496,
+    "count": 38,
+    "stability": 1.0,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "神经网络"
+    ],
+    "support": 0.03901895206243032,
+    "count": 35,
+    "stability": 1.0,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "计算机听觉"
+    ],
+    "support": 0.032329988851727984,
+    "count": 29,
+    "stability": 1.0,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "决策理论"
+    ],
+    "support": 0.032329988851727984,
+    "count": 29,
+    "stability": 1.0,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "注意力机制"
+    ],
+    "support": 0.03121516164994426,
+    "count": 28,
+    "stability": 1.0,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "机器学习"
+    ],
+    "support": 0.024526198439241916,
+    "count": 22,
+    "stability": 1.0,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "工作记忆"
+    ],
+    "support": 0.020066889632107024,
+    "count": 18,
+    "stability": 1.0,
+    "method": "B",
+    "phi": null
+  }
+]

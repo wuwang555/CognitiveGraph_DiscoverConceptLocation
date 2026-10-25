@@ -21,7 +21,7 @@ ENDO_CONCEPT_CONFIG = {
     "fixpoint_method": "B",        # "A" | "B" | "C" | "ABC"
 
     # ---------- Methods to iterate over in run_endo.py ----------
-    "fixpoint_methods": ["A", "B", "C", "ABC"],
+    "fixpoint_methods": ["A", "B", "C"],
 
     # ---------- fp_min_itemset_size values to iterate over ----------
     "min_itemset_sizes": [1, 2, 3],
@@ -32,10 +32,19 @@ ENDO_CONCEPT_CONFIG = {
     "fp_min_itemset_size": 1,      # default; overridden by min_itemset_sizes
 
     # ---------- Method B: containment lattice ----------
-    "lattice_min_set_size": 3,     # fallback only; fp_min_itemset_size wins
+    "lattice_min_support": 0.02,
+    "lattice_min_set_size": 1,
+    "lattice_max_itemset_size": 8,
 
     # ---------- Method C: role-consistency ----------
-    "stability_min": 0.6,          # new metric lives in [0.5, 1.0]
+    "role_min_stability": 0.7,     # role consistency in [0.5, 1.0]
+    "role_min_support": 0.005,     # auxiliary: filter out 1-occurrence noise
+    "role_min_set_size": 1,
+    "role_max_itemset_size": 8,
+
+    # ---------- Guards against combinatorial explosion ----------
+    "max_candidates": 200000,
+    "max_fixpoints": 1000,
 
     # ---------- Joint criteria ----------
     "use_joint_criteria": True,

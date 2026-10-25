@@ -35,9 +35,9 @@ class IndividualVariation:
         Parameters
         ----------
         base_parameters : dict, optional
-            Base parameters, defaults to config.BASE_PARAMETERS.
+            Base parameters, defaults to configB.md.BASE_PARAMETERS.
         variation_ranges : dict, optional
-            Variation ranges, defaults to config.VARIATION_RANGES.
+            Variation ranges, defaults to configB.md.VARIATION_RANGES.
         """
         self.base_parameters = base_parameters or BASE_PARAMETERS
         self.variation_ranges = variation_ranges or VARIATION_RANGES

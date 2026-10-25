@@ -2,38 +2,36 @@
 """
 Fixpoint detection for compression events.
 
-A "fixpoint" is a stable cluster of concepts -- a set that co-occurs
-in compression events more often than chance, cannot be decomposed
-into smaller stable units, and whose members maintain a consistent
-role across events.
+Three independent methods, each with its own search space and filter:
 
-Detection methods (switchable via config["fixpoint_method"]):
+    A: powerset + support      (all frequent itemsets)
+    B: powerset + lower-bound  (minimal frequent itemsets)
+    C: powerset + stability    (role-consistent itemsets)
 
-    "A"   - frequent itemset mining (Apriori-style enumeration)
-    "B"   - containment lattice (lower-bound elements)
-    "C"   - role-consistency analysis
-    "ABC" - union of the above
+All three share the same powerset enumeration routine. Independence
+comes from two places:
 
-Joint criteria (see the task report, §5.3):
-    1. support > θ_s
-    2. lower-bound in the containment lattice (optional)
-    3. mean role-consistency > θ_role
+    1. Each method has its own parameter set -- no leakage between methods.
+    2. Each method applies its own filter after enumeration.
 
-Role consistency replaces the original positional stability
-S(x) = 1 - std(rank) / mean(rank). The original formula is
-numerically unstable when mean(rank) → 0 (any concept that is
-occasionally a member gets an S near 0, killing its whole cluster).
-The new formula is bounded in [0.5, 1.0] and symmetric:
+Guards against combinatorial explosion:
+    - `max_candidates`: stops enumeration once the number of distinct
+      itemsets exceeds the cap (per call).
+    - `max_fixpoints`:   caps the returned list per method (sorted top-N).
 
-    role(x) = max(n_center(x), n_member(x)) / (n_center(x) + n_member(x))
+Role consistency (replaces the unstable positional formula):
 
-All thresholds are absolute so scales remain comparable.
+    role(x) = max(n_center, n_member) / (n_center + n_member)   in [0.5, 1.0]
+
+The original S(x) = 1 - std(rank)/mean(rank) collapses to 0 when
+mean(rank) is small, which killed whole clusters. The new metric is
+bounded, symmetric, and directly interpretable.
 """
 
 import math
-from collections import Counter, defaultdict
+from collections import Counter
 from itertools import combinations
-from typing import List, Dict, Any, FrozenSet
+from typing import List, Dict, Any, FrozenSet, Tuple
 
 import numpy as np
 
@@ -45,8 +43,7 @@ def events_to_transactions(events: List[Dict[str, Any]]) -> List[FrozenSet[str]]
     """Convert compression events into transaction sets.
 
     A compression event (center, members) yields the transaction
-    {center} ∪ members. Empty transactions are dropped. Single-node
-    transactions are KEPT so that fp_min_itemset_size = 1 can see them.
+    {center} ∪ members. Empty transactions are dropped.
     """
     transactions: List[FrozenSet[str]] = []
     for e in events:
@@ -60,40 +57,15 @@ def events_to_transactions(events: List[Dict[str, Any]]) -> List[FrozenSet[str]]
     return transactions
 
 
-def position_ranks(events: List[Dict[str, Any]]) -> Dict[str, List[int]]:
-    """Positional rank of each concept across events (kept for reference).
-
-    Rank per event:
-        0 - concept is the center
-        1 - concept is a member
-    Concepts absent from an event are simply not recorded.
-    """
-    ranks: Dict[str, List[int]] = defaultdict(list)
-    for e in events:
-        center = e.get("center")
-        members = e.get("related_nodes") or []
-        if center:
-            ranks[center].append(0)
-        for m in members:
-            if m and m != center:
-                ranks[m].append(1)
-    return dict(ranks)
-
-
 def stability_scores(events: List[Dict[str, Any]]) -> Dict[str, float]:
     """Role consistency in [0.5, 1.0].
 
         role(x) = max(n_center(x), n_member(x)) / (n_center(x) + n_member(x))
 
-    Properties:
-        - always the center       -> 1.0
-        - always a member         -> 1.0
-        - 50/50 mix               -> 0.5
-        - symmetric, bounded, no numerical blow-up
-        - concepts with zero participations never appear
-
-    This replaces the original S(x) = 1 - std(rank)/mean(rank), which
-    collapses to 0 when mean(rank) is small.
+    - always the center -> 1.0
+    - always a member   -> 1.0
+    - 50/50 mix         -> 0.5
+    - bounded, symmetric, no numerical blow-up
     """
     n_center: Counter = Counter()
     n_member: Counter = Counter()
@@ -149,37 +121,67 @@ class FixpointDetector:
                 f"Choose from 'A', 'B', 'C', 'ABC'."
             )
 
-        if self.cfg.get("use_joint_criteria", True):
+        if self.cfg.get("use_joint_criteria", False):
             raw = self._apply_joint(raw, events)
 
         raw.sort(key=lambda r: (r["support"], len(r["core"])), reverse=True)
         return raw
 
     # ================================================================== #
-    # Method A: frequent itemset mining
+    # Shared powerset enumeration (used by A, B, C)
     # ================================================================== #
-    def _method_A(self, events: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    def _enumerate_powerset(self,
+                            events: List[Dict[str, Any]],
+                            min_size: int,
+                            max_size: int,
+                            max_candidates: int) -> Tuple[Counter, int]:
+        """Enumerate all itemsets (subsets of transactions) up to max_size.
+
+        Returns (counter, N) where counter maps frozenset -> raw count,
+        and N is the number of transactions.
+
+        Stops early when len(counter) exceeds max_candidates. The partial
+        result is returned; the caller is responsible for treating the
+        cap as a semantic cutoff (not silently truncating).
+        """
         transactions = events_to_transactions(events)
         N = len(transactions)
         if N == 0:
-            return []
-
-        min_support = float(self.cfg.get("fp_min_support", 0.02))
-        max_size = int(self.cfg.get("fp_max_itemset_size", 8))
-        min_size = int(self.cfg.get("fp_min_itemset_size", 3))
-        min_count = max(1, int(math.ceil(min_support * N)))
+            return Counter(), 0
 
         counter: Counter = Counter()
+        lower = max(1, int(min_size))
+        upper = max(lower, int(max_size))
+
         for t in transactions:
             items = list(t)
             n = len(items)
-            top = min(max_size, n)
-            lower = max(1, min_size)
+            top = min(upper, n)
             for size in range(lower, top + 1):
                 for combo in combinations(items, size):
                     counter[frozenset(combo)] += 1
+            if len(counter) > max_candidates:
+                break
 
+        return counter, N
+
+    # ================================================================== #
+    # Method A: powerset + support
+    # ================================================================== #
+    def _method_A(self, events: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        min_size = int(self.cfg.get("fp_min_itemset_size", 1))
+        max_size = int(self.cfg.get("fp_max_itemset_size", 8))
+        min_support = float(self.cfg.get("fp_min_support", 0.02))
+        max_cand = int(self.cfg.get("max_candidates", 200000))
+        max_fp = int(self.cfg.get("max_fixpoints", 1000))
+
+        counter, N = self._enumerate_powerset(events, min_size, max_size, max_cand)
+        if N == 0:
+            return []
+
+        min_count = max(1, int(math.ceil(min_support * N)))
         stab = stability_scores(events)
+
         out: List[Dict[str, Any]] = []
         for itemset, cnt in counter.items():
             if cnt < min_count:
@@ -193,102 +195,99 @@ class FixpointDetector:
                 "stability": mean_stab,
                 "method": "A",
             })
-        return out
+
+        out.sort(key=lambda r: (r["support"], len(r["core"])), reverse=True)
+        return out[:max_fp]
 
     # ================================================================== #
-    # Method B: containment lattice
+    # Method B: powerset + lower-bound
     # ================================================================== #
     def _method_B(self, events: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        transactions = events_to_transactions(events)
-        N = len(transactions)
+        min_size = int(self.cfg.get("lattice_min_set_size", 1))
+        max_size = int(self.cfg.get("lattice_max_itemset_size", 8))
+        min_support = float(self.cfg.get("lattice_min_support", 0.02))
+        max_cand = int(self.cfg.get("max_candidates", 200000))
+        max_fp = int(self.cfg.get("max_fixpoints", 1000))
+
+        counter, N = self._enumerate_powerset(events, min_size, max_size, max_cand)
         if N == 0:
             return []
 
-        min_size = int(self.cfg.get(
-            "fp_min_itemset_size",
-            self.cfg.get("lattice_min_set_size", 3),
-        ))
-        min_support = float(self.cfg.get("joint_support_min", 0.02))
         min_count = max(1, int(math.ceil(min_support * N)))
-
-        distinct = list(set(transactions))
-
-        frequent_sets: List = []
-        for s in distinct:
-            if len(s) < min_size:
-                continue
-            cnt = sum(1 for t in transactions if s.issubset(t))
-            if cnt < min_count:
-                continue
-            frequent_sets.append((s, cnt))
-
-        set_list = [s for s, _ in frequent_sets]
         stab = stability_scores(events)
 
-        lower_bounds: List[Dict[str, Any]] = []
-        for s, cnt in frequent_sets:
-            is_lower = True
-            for s2 in set_list:
-                if s2 == s:
-                    continue
-                if s2.issubset(s):
-                    is_lower = False
-                    break
-            if not is_lower:
+        # Step 1: frequent sets under support threshold
+        frequent = {s: cnt for s, cnt in counter.items() if cnt >= min_count}
+        frequent_set = set(frequent.keys())
+
+        # Step 2: keep only lower-bound elements
+        out: List[Dict[str, Any]] = []
+        for s, cnt in frequent.items():
+            if not self._is_lower_bound(s, frequent_set):
                 continue
             members = sorted(s)
             mean_stab = float(np.mean([stab.get(m, 0.5) for m in members]))
-            lower_bounds.append({
+            out.append({
                 "core": members,
                 "support": cnt / N,
                 "count": cnt,
                 "stability": mean_stab,
                 "method": "B",
             })
-        return lower_bounds
+
+        out.sort(key=lambda r: (r["support"], len(r["core"])), reverse=True)
+        return out[:max_fp]
+
+    @staticmethod
+    def _is_lower_bound(s: FrozenSet[str],
+                        frequent_set: set) -> bool:
+        """True iff every proper subset of s of size |s|-1 is NOT frequent."""
+        if len(s) <= 1:
+            return True
+        for sub in combinations(s, len(s) - 1):
+            if frozenset(sub) in frequent_set:
+                return False
+        return True
 
     # ================================================================== #
-    # Method C: role-consistency analysis
+    # Method C: powerset + stability
     # ================================================================== #
     def _method_C(self, events: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        min_size = int(self.cfg.get("role_min_set_size", 1))
+        max_size = int(self.cfg.get("role_max_itemset_size", 8))
+        min_stability = float(self.cfg.get("role_min_stability", 0.7))
+        min_support = float(self.cfg.get("role_min_support", 0.005))
+        max_cand = int(self.cfg.get("max_candidates", 200000))
+        max_fp = int(self.cfg.get("max_fixpoints", 1000))
+
+        counter, N = self._enumerate_powerset(events, min_size, max_size, max_cand)
+        if N == 0:
+            return []
+
+        min_count = max(1, int(math.ceil(min_support * N)))
         stab = stability_scores(events)
-        stability_min = float(self.cfg.get("stability_min", 0.6))
-        min_size = int(self.cfg.get(
-            "fp_min_itemset_size",
-            self.cfg.get("lattice_min_set_size", 3),
-        ))
 
-        bucket: Dict[FrozenSet[str], Dict[str, Any]] = {}
-        for e in events:
-            center = e.get("center")
-            if not center:
-                continue
-            members = e.get("related_nodes") or []
-            s = frozenset([center] + [m for m in members if m and m != center])
-            if len(s) < min_size:
-                continue
-            mean_stab = float(np.mean([stab.get(m, 0.5) for m in s]))
-            if mean_stab < stability_min:
-                continue
-            if s not in bucket:
-                bucket[s] = {
-                    "core": sorted(s),
-                    "support": 0.0,
-                    "count": 0,
-                    "stability": mean_stab,
-                    "method": "C",
-                }
-            bucket[s]["count"] += 1
-
-        N = max(1, len(events))
         out: List[Dict[str, Any]] = []
-        for rec in bucket.values():
-            rec["support"] = rec["count"] / N
-            out.append(rec)
-        return out
+        for itemset, cnt in counter.items():
+            if cnt < min_count:
+                continue
+            members = sorted(itemset)
+            mean_stab = float(np.mean([stab.get(m, 0.5) for m in members]))
+            if mean_stab < min_stability:
+                continue
+            out.append({
+                "core": members,
+                "support": cnt / N,
+                "count": cnt,
+                "stability": mean_stab,
+                "method": "C",
+            })
+
+        out.sort(key=lambda r: (r["stability"], r["support"]), reverse=True)
+        return out[:max_fp]
 
     # ================================================================== #
-    # Merge helper
+    # ABC union
     # ================================================================== #
     @staticmethod
     def _merge(*lists) -> List[Dict[str, Any]]:
@@ -298,70 +297,50 @@ class FixpointDetector:
                 key = frozenset(c["core"])
                 if key not in merged or merged[key]["support"] < c["support"]:
                     merged[key] = dict(c)
-        return list(merged.values())
+        max_fp = 1000  # will be re-truncated by detect()
+        items = sorted(merged.values(),
+                       key=lambda r: (r["support"], len(r["core"])),
+                       reverse=True)
+        return items[:max_fp]
 
     # ================================================================== #
-    # Joint criteria
-    # ------------------------------------------------------------------ #
-    # Stage 1: enrich with support + stability
-    # Stage 2: support hard threshold; stability either hard or soft
-    # Stage 3: lower-bound filter (optional, defines "minimal fixpoint")
+    # Optional joint post-filter (default OFF)
     # ================================================================== #
     def _apply_joint(self,
                      candidates: List[Dict[str, Any]],
                      events: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        """Optional post-filter: support + stability + lower-bound.
+
+        Only runs when `use_joint_criteria` is True. Since each method
+        already has its own filter, this should normally stay off.
+        """
         if not candidates:
             return []
 
-        transactions = events_to_transactions(events)
-        N = max(1, len(transactions))
         min_support = float(self.cfg.get("joint_support_min", 0.02))
         min_stability = float(self.cfg.get("joint_stability_min", 0.6))
         use_stab_hard = bool(self.cfg.get("use_stability_hard_threshold", False))
         use_lower_bound = bool(self.cfg.get("use_lower_bound_filter", True))
+        max_fp = int(self.cfg.get("max_fixpoints", 1000))
 
-        stab = stability_scores(events)
-
-        # ---- Stage 1: enrich ----
-        enriched: List[Dict[str, Any]] = []
-        for c in candidates:
-            s = frozenset(c["core"])
-            cnt = sum(1 for t in transactions if s.issubset(t))
-            support = cnt / N
-            mean_stab = float(np.mean([stab.get(m, 0.5) for m in s]))
-            enriched.append({
-                "core": list(s),
-                "support": support,
-                "count": cnt,
-                "stability": mean_stab,
-                "method": c.get("method", "?"),
-            })
-
-        # ---- Stage 2: support (hard) + stability (hard or soft) ----
         if use_stab_hard:
-            passing = [c for c in enriched
+            passing = [c for c in candidates
                        if c["support"] >= min_support
                        and c["stability"] >= min_stability]
         else:
-            passing = [c for c in enriched if c["support"] >= min_support]
+            passing = [c for c in candidates if c["support"] >= min_support]
 
-        # ---- Stage 3: lower-bound filter (optional) ----
         if not use_lower_bound:
             passing.sort(key=lambda c: (c["support"], c["stability"]),
                          reverse=True)
-            return passing
+            return passing[:max_fp]
 
+        passing_set = set(frozenset(c["core"]) for c in passing)
         out: List[Dict[str, Any]] = []
         for c in passing:
             s = frozenset(c["core"])
-            is_lower = True
-            for other in passing:
-                if other is c:
-                    continue
-                os_ = frozenset(other["core"])
-                if os_ != s and os_.issubset(s):
-                    is_lower = False
-                    break
-            if is_lower:
+            if self._is_lower_bound(s, passing_set):
                 out.append(c)
-        return out
+
+        out.sort(key=lambda c: (c["support"], c["stability"]), reverse=True)
+        return out[:max_fp]

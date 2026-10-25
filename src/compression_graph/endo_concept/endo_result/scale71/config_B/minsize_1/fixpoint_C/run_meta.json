@@ -1,0 +1,12 @@
+{
+  "scale": 71,
+  "config_method": "B",
+  "minsize": 1,
+  "fixpoint_method": "C",
+  "n_events": 529,
+  "n_fixpoints": 31,
+  "n_logic_edges": 176,
+  "n_structure_entries": 31,
+  "phi_mean": null,
+  "phi_std": null
+}

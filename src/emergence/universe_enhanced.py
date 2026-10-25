@@ -8,8 +8,8 @@ and supports building networks with a specified number of concepts.
 from typing import Dict, Any, Optional
 import random
 
-from emergence.universe import CognitiveUniverse
-from emergence.detector_fixed import EmergenceDetectorFixed
+from src.emergence.universe import CognitiveUniverse
+from src.emergence.detector_fixed import EmergenceDetectorFixed
 
 
 random.seed(42)
@@ -35,7 +35,7 @@ class CognitiveUniverseEnhanced(CognitiveUniverse):
 
     def initialize_semantic_network(self) -> None:
         """Initialize semantic network, supporting a specified number of concepts."""
-        from core.semantic_network import SemanticConceptNetwork
+        from src.core.semantic_network import SemanticConceptNetwork
 
         semantic_net = SemanticConceptNetwork()
         semantic_net.build_comprehensive_network(num_concepts=self.num_concepts)

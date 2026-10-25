@@ -17,9 +17,9 @@ from datetime import datetime
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
-from emergence.universe import CognitiveUniverse
-from emergence.universe_enhanced import CognitiveUniverseEnhanced
-from utils.individual_variation import IndividualVariation, create_enhanced_individual_params
+from src.emergence.universe import CognitiveUniverse
+from src.emergence.universe_enhanced import CognitiveUniverseEnhanced
+from src.utils.individual_variation import IndividualVariation, create_enhanced_individual_params
 from config import BASE_PARAMETERS, VARIATION_RANGES
 
 random.seed(42)
@@ -60,7 +60,7 @@ class CoreOnlyUniverse(CognitiveUniverse):
                 self.apply_basic_forgetting()
 
     def initialize_semantic_network(self):
-        from core.semantic_network import SemanticConceptNetwork
+        from src.core.semantic_network import SemanticConceptNetwork
 
         semantic_net = SemanticConceptNetwork()
         semantic_net.build_comprehensive_network(num_concepts=self.num_concepts)

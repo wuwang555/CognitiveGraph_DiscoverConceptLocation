@@ -3,8 +3,8 @@ Enhanced Cognitive Graph Model Module
 Includes semantic-based cognitive graph and energy-optimized cognitive graph.
 """
 
-from core.cognitive_graph import BaseCognitiveGraph
-from core.semantic_network import EnhancedSemanticConceptNetwork
+from src.core.cognitive_graph import BaseCognitiveGraph
+from src.core.semantic_network import EnhancedSemanticConceptNetwork
 from typing import Dict, Any, List
 
 

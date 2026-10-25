@@ -9,10 +9,10 @@ import numpy as np
 import time
 import pandas as pd
 from datetime import datetime
-from emergence.universe_enhanced import CognitiveUniverseEnhanced
-from emergence.observer import EmergenceObserver
-from emergence.detector_fixed import EmergenceDetectorFixed
-from utils.individual_variation import IndividualVariation, create_enhanced_individual_params
+from src.emergence.universe_enhanced import CognitiveUniverseEnhanced
+from src.emergence.observer import EmergenceObserver
+from src.emergence.detector_fixed import EmergenceDetectorFixed
+from src.utils.individual_variation import IndividualVariation, create_enhanced_individual_params
 from config import *
 import os
 import csv

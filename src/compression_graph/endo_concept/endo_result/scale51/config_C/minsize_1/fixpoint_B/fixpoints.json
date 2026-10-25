@@ -1,0 +1,312 @@
+[
+  {
+    "core": [
+      "基"
+    ],
+    "support": 0.375,
+    "count": 357,
+    "stability": 0.7450980392156863,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "矩阵"
+    ],
+    "support": 0.37289915966386555,
+    "count": 355,
+    "stability": 0.7690140845070422,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "线性无关"
+    ],
+    "support": 0.36764705882352944,
+    "count": 350,
+    "stability": 0.7314285714285714,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "线性映射"
+    ],
+    "support": 0.35084033613445376,
+    "count": 334,
+    "stability": 0.9520958083832335,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "维数"
+    ],
+    "support": 0.3445378151260504,
+    "count": 328,
+    "stability": 0.7378048780487805,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "向量空间"
+    ],
+    "support": 0.32983193277310924,
+    "count": 314,
+    "stability": 1.0,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "线性组合"
+    ],
+    "support": 0.29936974789915966,
+    "count": 285,
+    "stability": 0.6807017543859649,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "环"
+    ],
+    "support": 0.29096638655462187,
+    "count": 277,
+    "stability": 1.0,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "自然数"
+    ],
+    "support": 0.2615546218487395,
+    "count": 249,
+    "stability": 0.6265060240963856,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "域"
+    ],
+    "support": 0.25735294117647056,
+    "count": 245,
+    "stability": 1.0,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "实数"
+    ],
+    "support": 0.25,
+    "count": 238,
+    "stability": 0.7352941176470589,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "群"
+    ],
+    "support": 0.2426470588235294,
+    "count": 231,
+    "stability": 1.0,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "有理数"
+    ],
+    "support": 0.21218487394957983,
+    "count": 202,
+    "stability": 0.8415841584158416,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "极限"
+    ],
+    "support": 0.20798319327731093,
+    "count": 198,
+    "stability": 0.6464646464646465,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "乘法"
+    ],
+    "support": 0.20588235294117646,
+    "count": 196,
+    "stability": 0.8418367346938775,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "序列"
+    ],
+    "support": 0.20063025210084034,
+    "count": 191,
+    "stability": 0.5968586387434555,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "序"
+    ],
+    "support": 0.1953781512605042,
+    "count": 186,
+    "stability": 1.0,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "闭区间"
+    ],
+    "support": 0.1796218487394958,
+    "count": 171,
+    "stability": 0.9649122807017544,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "加法"
+    ],
+    "support": 0.17647058823529413,
+    "count": 168,
+    "stability": 0.875,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "整数"
+    ],
+    "support": 0.17542016806722688,
+    "count": 167,
+    "stability": 1.0,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "减法"
+    ],
+    "support": 0.17121848739495799,
+    "count": 163,
+    "stability": 0.9325153374233128,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "复数"
+    ],
+    "support": 0.16491596638655462,
+    "count": 157,
+    "stability": 0.8407643312101911,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "连续性"
+    ],
+    "support": 0.15756302521008403,
+    "count": 150,
+    "stability": 0.8533333333333334,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "开区间"
+    ],
+    "support": 0.14285714285714285,
+    "count": 136,
+    "stability": 0.7720588235294118,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "度量空间"
+    ],
+    "support": 0.13550420168067226,
+    "count": 129,
+    "stability": 1.0,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "不可数"
+    ],
+    "support": 0.12184873949579832,
+    "count": 116,
+    "stability": 1.0,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "上确界"
+    ],
+    "support": 0.11239495798319328,
+    "count": 107,
+    "stability": 1.0,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "可数"
+    ],
+    "support": 0.10294117647058823,
+    "count": 98,
+    "stability": 1.0,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "邻域"
+    ],
+    "support": 0.07668067226890757,
+    "count": 73,
+    "stability": 1.0,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "除法"
+    ],
+    "support": 0.06932773109243698,
+    "count": 66,
+    "stability": 0.8484848484848485,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "下确界"
+    ],
+    "support": 0.05672268907563025,
+    "count": 54,
+    "stability": 1.0,
+    "method": "B",
+    "phi": null
+  }
+]

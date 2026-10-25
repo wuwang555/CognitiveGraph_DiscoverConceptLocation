@@ -175,7 +175,7 @@ def run_batch_experiments(logger):
     logger.info("=" * 80)
 
     try:
-        from experiments.batch_experiments import BatchExperimentRunner
+        from src.experiments.batch_experiments import BatchExperimentRunner
 
         runner = BatchExperimentRunner(output_dir='results/batch_experiments')
 
@@ -203,7 +203,7 @@ def run_emergence_study(logger):
     logger.info("=" * 80)
 
     try:
-        from experiments.emergence_study_fixed import EmergenceStudyFixed
+        from src.experiments.emergence_study_fixed import EmergenceStudyFixed
 
         logger.info("Starting emergence study...")
         start_time = time.time()
@@ -256,7 +256,7 @@ def run_algebra_experiments(logger):
     logger.info("=" * 80)
 
     try:
-        from algebra.algebra_experiments import AlgebraValidationExperiments
+        from src.algebra.algebra_experiments import AlgebraValidationExperiments
 
         logger.info("Starting algebraic verification experiments...")
         start_time = time.time()
@@ -287,7 +287,7 @@ def run_semantic_network_demo(logger):
             demo_semantic_network()
             return True
         except ImportError:
-            from core.semantic_network import SemanticConceptNetwork
+            from src.core.semantic_network import SemanticConceptNetwork
 
             logger.info("Building semantic concept network...")
             semantic_net = SemanticConceptNetwork()
@@ -455,7 +455,7 @@ def main():
             logger.info("Suggestions:")
             logger.info("  1. Check the detailed results in the results/ directory")
             logger.info("  2. Run analysis.py for data analysis")
-            logger.info("  3. Modify config.py to adjust parameters and re‑run experiments")
+            logger.info("  3. Modify configB.md.py to adjust parameters and re‑run experiments")
         elif successful_experiments >= 2:
             logger.info("\n⚠️  Some experiments completed; consider checking the failed ones")
         else:

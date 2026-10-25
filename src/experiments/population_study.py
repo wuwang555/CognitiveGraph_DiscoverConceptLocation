@@ -5,11 +5,11 @@ Used to run semantic-enhanced population experiments, simulating cognitive evolu
 
 import os
 import csv
-from utils.individual_variation import IndividualVariation, create_enhanced_individual_params
-from models.enhanced_model import SemanticEnhancedCognitiveGraph, EnergyOptimizedCognitiveGraph
-from utils.analysis import *
-from core.cognitive_states import *
-from utils.visualization import *
+from src.utils.individual_variation import IndividualVariation, create_enhanced_individual_params
+from src.models.enhanced_model import SemanticEnhancedCognitiveGraph, EnergyOptimizedCognitiveGraph
+from src.utils.analysis import *
+from src.core.cognitive_states import *
+from src.utils.visualization import *
 
 
 def run_semantic_enhanced_experiment(num_individuals=3, max_iterations=10000, num_concepts=None):
@@ -185,8 +185,8 @@ def demo_semantic_network(num_concepts=None):
     Args:
         num_concepts (int, optional): Number of concept nodes.
     """
-    from core.semantic_network import SemanticConceptNetwork
-    from utils.visualization import visualize_semantic_network
+    from src.core.semantic_network import SemanticConceptNetwork
+    from src.utils.visualization import visualize_semantic_network
 
     semantic_net = SemanticConceptNetwork()
     # Build semantic network, passing num_concepts parameter

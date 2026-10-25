@@ -34,6 +34,11 @@ from src.utils.individual_variation import (
 )
 from config import BASE_PARAMETERS, VARIATION_RANGES
 
+import random
+import numpy as np
+
+random.seed(42)
+np.random.seed(42)
 
 def run_one(scale, individual_id=0, max_iterations=10000,
             detection_interval=100, use_raw=True):

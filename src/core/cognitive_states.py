@@ -9,7 +9,7 @@ from enum import Enum
 from collections import defaultdict
 from typing import List, Dict, Any
 
-# Import state transition matrix and energy ranges from config
+# Import state transition matrix and energy ranges from configB.md
 from config import STATE_TRANSITION_MATRIX, STATE_ENERGY_RANGES
 
 random.seed(42)
@@ -24,7 +24,7 @@ class CognitiveState(Enum):
 class CognitiveStateManager:
     """Cognitive state manager, maintaining current state, subjective energy, and history.
 
-    State transitions are controlled by a Markov chain (transition matrix loaded from config); upon state change,
+    State transitions are controlled by a Markov chain (transition matrix loaded from configB.md); upon state change,
     subjective energy is randomly updated within the corresponding range.
     """
 
@@ -36,7 +36,7 @@ class CognitiveStateManager:
     def update_cognitive_state(self) -> None:
         """Update cognitive state according to the transition matrix.
 
-        Transition probabilities are obtained from config; decide the next state randomly. If state changes,
+        Transition probabilities are obtained from configB.md; decide the next state randomly. If state changes,
         call _update_subjective_energy. Regardless of state change, record current state and energy in history.
         """
         current_state_name = self.current_state.name
@@ -65,7 +65,7 @@ class CognitiveStateManager:
     def _update_subjective_energy(self) -> None:
         """Update subjective cognitive energy based on the current state.
 
-        The new energy is uniformly sampled from the state's energy range (defined in config), clamped to [0.1, 3.0].
+        The new energy is uniformly sampled from the state's energy range (defined in configB.md), clamped to [0.1, 3.0].
         """
         state_name = self.current_state.name
         energy_range = STATE_ENERGY_RANGES[state_name]

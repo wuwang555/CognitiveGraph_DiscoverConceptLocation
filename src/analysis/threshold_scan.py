@@ -17,7 +17,7 @@ from tqdm import tqdm
 # Add project root to path (adjust according to actual project structure)
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from emergence.universe_enhanced import CognitiveUniverseEnhanced
+from src.emergence.universe_enhanced import CognitiveUniverseEnhanced
 
 
 def run_threshold_scan(

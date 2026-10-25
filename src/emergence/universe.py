@@ -200,7 +200,7 @@ class CognitiveUniverse:
 
     def initialize_semantic_network(self) -> None:
         """Initialize semantic network, building nodes and edges from SemanticConceptNetwork."""
-        from core.semantic_network import SemanticConceptNetwork
+        from src.core.semantic_network import SemanticConceptNetwork
 
         semantic_net = SemanticConceptNetwork()
         semantic_net.build_comprehensive_network()

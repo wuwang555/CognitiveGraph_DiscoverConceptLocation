@@ -16,8 +16,8 @@ from plotly.subplots import make_subplots
 from datetime import datetime
 
 # 导入核心模块（确保路径正确）
-from core.cognitive_graph import BaseCognitiveGraph
-from models.enhanced_model import EnergyOptimizedCognitiveGraph
+from src.core.cognitive_graph import BaseCognitiveGraph
+from src.models.enhanced_model import EnergyOptimizedCognitiveGraph
 from config import BASE_PARAMETERS
 
 # ========== 配置 ==========

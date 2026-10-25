@@ -54,7 +54,7 @@ class SemanticConceptNetwork:
         """Extract keywords from text using jieba segmentation and stop word filtering.
 
         :param text: Input text
-        :param top_k: Number of keywords to return, defaults to reading from config
+        :param top_k: Number of keywords to return, defaults to reading from configB.md
         :return: List of keywords
         """
         if top_k is None:
@@ -143,7 +143,7 @@ class SemanticConceptNetwork:
 
         Build all concept nodes based on core concept definitions, compute pairwise similarities, and expand recursively.
 
-        :param num_concepts: Optional, number of core concepts to use (take the first N from config)
+        :param num_concepts: Optional, number of core concepts to use (take the first N from configB.md)
         """
         self._predefine_core_concepts(num_concepts)
 
@@ -166,7 +166,7 @@ class SemanticConceptNetwork:
         print(f"Number of connections: {total_connections}")
 
     def _predefine_core_concepts(self, num_concepts: Optional[int] = None) -> None:
-        """Load core concept definitions from config.
+        """Load core concept definitions from configB.md.
 
         :param num_concepts: Optional, number of concepts to load
         """
@@ -234,7 +234,7 @@ class SemanticConceptNetwork:
 
     def visualize_semantic_network(self, highlight_concepts: Optional[List[str]] = None) -> None:
         """Visualize the semantic network (requires matplotlib)."""
-        from utils.visualization import visualize_semantic_network
+        from src.utils.visualization import visualize_semantic_network
         visualize_semantic_network(self.semantic_network, self.concept_definitions, highlight_concepts)
 
         import matplotlib.pyplot as plt
