@@ -70,7 +70,7 @@ def main():
     cfg = COMPRESSION_GRAPH_CONFIG
     scales = [51, 71, 91, 111]
 
-    out_dir = Path(cfg["output_dir"]) / "objective_metrics"
+    out_dir = (Path(_HERE) / "../../../results/objective_metrics").resolve()
     out_dir.mkdir(parents=True, exist_ok=True)
 
     power_rows = []

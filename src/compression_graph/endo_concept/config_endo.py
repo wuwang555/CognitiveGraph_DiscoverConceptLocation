@@ -66,7 +66,7 @@ ENDO_CONCEPT_CONFIG = {
 
     # ---------- IO ----------
     "raw_events_path":
-        "results/compression_graph/raw_compression_events.csv",
+        "../../results/compression_graph/raw_compression_events.csv",
     "output_dir":
         "endo_result",
     "scales": [51, 71, 91, 111],

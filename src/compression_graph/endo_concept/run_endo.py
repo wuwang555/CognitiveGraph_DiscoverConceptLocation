@@ -78,7 +78,7 @@ def _resolve_raw_csv(cfg):
     if raw_csv.exists():
         return raw_csv
 
-    alt = Path("../results/compression_graph/raw_compression_events.csv")
+    alt = Path(_PROJ) / "results" / "compression_graph" / "raw_compression_events.csv"
     if alt.exists():
         return alt
 
@@ -260,7 +260,14 @@ def main():
     cfg = ENDO_CONCEPT_CONFIG
     config_method = _config_method()
 
-    output_root = Path(os.environ.get("ENDO_OUTPUT_DIR", cfg["output_dir"]))
+    default_output = Path(_PROJ) / "results" / "endo_result"
+
+    output_root = Path(os.environ.get("ENDO_OUTPUT_DIR", str(default_output)))
+    if not output_root.is_absolute():
+        output_root = (Path(_PROJ) / output_root).resolve()
+    else:
+        output_root = output_root.resolve()
+
     output_root.mkdir(parents=True, exist_ok=True)
 
     raw_csv = _resolve_raw_csv(cfg)

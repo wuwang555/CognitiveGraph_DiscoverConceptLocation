@@ -36,6 +36,8 @@ _parser = argparse.ArgumentParser()
 _parser.add_argument("--config", choices=["A", "B", "C"], default="A")
 _parser.add_argument("--scales", nargs="+", type=int, default=[51, 71, 91, 111])
 _parser.add_argument("--iterations", type=int, default=10000)
+_parser.add_argument("--out_root", default=None,
+                     help="Default: <project_root>/results/g1_export")
 _args = _parser.parse_args()
 
 os.environ["CONFIG_METHOD"] = _args.config
@@ -159,7 +161,10 @@ def export_g1(universe, scale, config, out_root):
 
 # ===================================================================== #
 def main():
-    out_root = Path(_HERE) / "g1_export"
+    default_root = Path(_PROJ) / "results" / "g1_export"
+    out_root = (Path(_args.out_root) if _args.out_root
+                else default_root).resolve()
+    out_root.mkdir(parents=True, exist_ok=True)
 
     print("=" * 68)
     print(f"G1 exporter -- config={_args.config}, scales={_args.scales}")

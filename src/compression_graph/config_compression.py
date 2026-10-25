@@ -30,7 +30,7 @@ COMPRESSION_GRAPH_CONFIG = {
     "compression_threshold": 1.5,  # absolute: Phi = internal / external
 
     # ---------- Output ----------
-    "output_dir": "results/compression_graph",
+    "output_dir": "../../../results/compression_graph",
     "random_seed": 42,
     "verbose": True,
 }

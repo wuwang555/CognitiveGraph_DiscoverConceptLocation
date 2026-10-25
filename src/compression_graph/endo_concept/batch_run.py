@@ -49,8 +49,8 @@ def main():
     base_env = os.environ.copy()
     base_env["PYTHONHASHSEED"] = "0"       # 固定 set/frozenset 迭代顺序
 
-    raw_root = _CG / "results" / "compression_graph"
-    endo_result = _HERE / "endo_result"
+    raw_root = _PROJ / "results" / "compression_graph"
+    endo_result = _PROJ / "results" / "endo_result"
     endo_result.mkdir(parents=True, exist_ok=True)
 
     for config_method in config_methods:

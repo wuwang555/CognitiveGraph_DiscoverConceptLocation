@@ -52,10 +52,23 @@ _parser.add_argument("--root", default=None)
 _args = _parser.parse_args()
 
 _HERE = Path(__file__).resolve().parent
-_root = Path(_args.root) if _args.root else _HERE / "four_dim_vectors"
+_PROJ = _HERE.parent.parent.parent          # .../CognitiveGraph_DiscoverConceptLocation
+_ROOT_DEFAULT = _PROJ / "results" / "four_dim_vectors"
+
+_root = Path(_args.root) if _args.root else _ROOT_DEFAULT
 _grid_csv = _root / "convexity_sweep" / "grids" / "grid_ALL.csv"
 _fig_root = _root / "convexity_sweep" / "figures"
 
+if _args.method == "holdout":
+    _grid_csv = _root / "convexity_sweep" / "holdout" / "grids" / "holdout_ALL.csv"
+    _fig_root = _root / "convexity_sweep" / "holdout" / "figures"
+    METRICS = [...]
+else:
+    _grid_csv = _root / "convexity_sweep" / "grids" / "grid_ALL.csv"
+    _fig_root = _root / "convexity_sweep" / "figures"
+    METRICS = [...]
+
+# 在这里统一创建子目录
 for sub in ("2d_lines", "2d_heatmaps", "3d_surfaces",
             "cross_config", "4d_density"):
     (_fig_root / sub).mkdir(parents=True, exist_ok=True)
