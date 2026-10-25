@@ -1,0 +1,392 @@
+[
+  {
+    "core": [
+      "牛顿定律"
+    ],
+    "support": 0.48878923766816146,
+    "count": 436,
+    "stability": 0.7958715596330275,
+    "method": "A",
+    "phi": null
+  },
+  {
+    "core": [
+      "热力学"
+    ],
+    "support": 0.4260089686098655,
+    "count": 380,
+    "stability": 1.0,
+    "method": "A",
+    "phi": null
+  },
+  {
+    "core": [
+      "摩擦力"
+    ],
+    "support": 0.4248878923766816,
+    "count": 379,
+    "stability": 0.7572559366754618,
+    "method": "A",
+    "phi": null
+  },
+  {
+    "core": [
+      "量子力学"
+    ],
+    "support": 0.41816143497757846,
+    "count": 373,
+    "stability": 0.774798927613941,
+    "method": "A",
+    "phi": null
+  },
+  {
+    "core": [
+      "相对论"
+    ],
+    "support": 0.39798206278026904,
+    "count": 355,
+    "stability": 0.7408450704225352,
+    "method": "A",
+    "phi": null
+  },
+  {
+    "core": [
+      "力学"
+    ],
+    "support": 0.312780269058296,
+    "count": 279,
+    "stability": 1.0,
+    "method": "A",
+    "phi": null
+  },
+  {
+    "core": [
+      "静电力"
+    ],
+    "support": 0.27242152466367714,
+    "count": 243,
+    "stability": 0.6296296296296297,
+    "method": "A",
+    "phi": null
+  },
+  {
+    "core": [
+      "能量守恒"
+    ],
+    "support": 0.2679372197309417,
+    "count": 239,
+    "stability": 0.8619246861924686,
+    "method": "A",
+    "phi": null
+  },
+  {
+    "core": [
+      "电磁学"
+    ],
+    "support": 0.24551569506726456,
+    "count": 219,
+    "stability": 1.0,
+    "method": "A",
+    "phi": null
+  },
+  {
+    "core": [
+      "万有引力"
+    ],
+    "support": 0.24551569506726456,
+    "count": 219,
+    "stability": 0.6484018264840182,
+    "method": "A",
+    "phi": null
+  },
+  {
+    "core": [
+      "动量"
+    ],
+    "support": 0.2399103139013453,
+    "count": 214,
+    "stability": 0.8364485981308412,
+    "method": "A",
+    "phi": null
+  },
+  {
+    "core": [
+      "运动学"
+    ],
+    "support": 0.22982062780269058,
+    "count": 205,
+    "stability": 1.0,
+    "method": "A",
+    "phi": null
+  },
+  {
+    "core": [
+      "量子场论"
+    ],
+    "support": 0.22869955156950672,
+    "count": 204,
+    "stability": 1.0,
+    "method": "A",
+    "phi": null
+  },
+  {
+    "core": [
+      "算法"
+    ],
+    "support": 0.1547085201793722,
+    "count": 138,
+    "stability": 0.6159420289855072,
+    "method": "A",
+    "phi": null
+  },
+  {
+    "core": [
+      "计算机视觉"
+    ],
+    "support": 0.15358744394618834,
+    "count": 137,
+    "stability": 1.0,
+    "method": "A",
+    "phi": null
+  },
+  {
+    "core": [
+      "操作系统"
+    ],
+    "support": 0.15134529147982062,
+    "count": 135,
+    "stability": 0.6518518518518519,
+    "method": "A",
+    "phi": null
+  },
+  {
+    "core": [
+      "宇宙学"
+    ],
+    "support": 0.14237668161434977,
+    "count": 127,
+    "stability": 1.0,
+    "method": "A",
+    "phi": null
+  },
+  {
+    "core": [
+      "软件工程"
+    ],
+    "support": 0.12443946188340807,
+    "count": 111,
+    "stability": 1.0,
+    "method": "A",
+    "phi": null
+  },
+  {
+    "core": [
+      "神经网络"
+    ],
+    "support": 0.1210762331838565,
+    "count": 108,
+    "stability": 1.0,
+    "method": "A",
+    "phi": null
+  },
+  {
+    "core": [
+      "数据结构"
+    ],
+    "support": 0.11659192825112108,
+    "count": 104,
+    "stability": 1.0,
+    "method": "A",
+    "phi": null
+  },
+  {
+    "core": [
+      "数据库"
+    ],
+    "support": 0.10986547085201794,
+    "count": 98,
+    "stability": 1.0,
+    "method": "A",
+    "phi": null
+  },
+  {
+    "core": [
+      "统计力学"
+    ],
+    "support": 0.09417040358744394,
+    "count": 84,
+    "stability": 1.0,
+    "method": "A",
+    "phi": null
+  },
+  {
+    "core": [
+      "深度学习"
+    ],
+    "support": 0.0930493273542601,
+    "count": 83,
+    "stability": 1.0,
+    "method": "A",
+    "phi": null
+  },
+  {
+    "core": [
+      "计算机网络"
+    ],
+    "support": 0.09080717488789238,
+    "count": 81,
+    "stability": 1.0,
+    "method": "A",
+    "phi": null
+  },
+  {
+    "core": [
+      "生成对抗网络"
+    ],
+    "support": 0.08744394618834081,
+    "count": 78,
+    "stability": 0.7435897435897436,
+    "method": "A",
+    "phi": null
+  },
+  {
+    "core": [
+      "迁移学习"
+    ],
+    "support": 0.07623318385650224,
+    "count": 68,
+    "stability": 1.0,
+    "method": "A",
+    "phi": null
+  },
+  {
+    "core": [
+      "专家系统"
+    ],
+    "support": 0.07174887892376682,
+    "count": 64,
+    "stability": 1.0,
+    "method": "A",
+    "phi": null
+  },
+  {
+    "core": [
+      "自然语言处理"
+    ],
+    "support": 0.06950672645739911,
+    "count": 62,
+    "stability": 1.0,
+    "method": "A",
+    "phi": null
+  },
+  {
+    "core": [
+      "数据挖掘"
+    ],
+    "support": 0.06726457399103139,
+    "count": 60,
+    "stability": 1.0,
+    "method": "A",
+    "phi": null
+  },
+  {
+    "core": [
+      "机器学习"
+    ],
+    "support": 0.06502242152466367,
+    "count": 58,
+    "stability": 1.0,
+    "method": "A",
+    "phi": null
+  },
+  {
+    "core": [
+      "注意力机制"
+    ],
+    "support": 0.061659192825112105,
+    "count": 55,
+    "stability": 1.0,
+    "method": "A",
+    "phi": null
+  },
+  {
+    "core": [
+      "强化学习"
+    ],
+    "support": 0.05941704035874439,
+    "count": 53,
+    "stability": 0.6226415094339622,
+    "method": "A",
+    "phi": null
+  },
+  {
+    "core": [
+      "机器人学"
+    ],
+    "support": 0.05717488789237668,
+    "count": 51,
+    "stability": 0.803921568627451,
+    "method": "A",
+    "phi": null
+  },
+  {
+    "core": [
+      "智能体"
+    ],
+    "support": 0.053811659192825115,
+    "count": 48,
+    "stability": 0.9375,
+    "method": "A",
+    "phi": null
+  },
+  {
+    "core": [
+      "模式识别"
+    ],
+    "support": 0.04708520179372197,
+    "count": 42,
+    "stability": 1.0,
+    "method": "A",
+    "phi": null
+  },
+  {
+    "core": [
+      "信息安全"
+    ],
+    "support": 0.04596412556053812,
+    "count": 41,
+    "stability": 1.0,
+    "method": "A",
+    "phi": null
+  },
+  {
+    "core": [
+      "元认知"
+    ],
+    "support": 0.033632286995515695,
+    "count": 30,
+    "stability": 0.9666666666666667,
+    "method": "A",
+    "phi": null
+  },
+  {
+    "core": [
+      "感知心理学"
+    ],
+    "support": 0.03139013452914798,
+    "count": 28,
+    "stability": 1.0,
+    "method": "A",
+    "phi": null
+  },
+  {
+    "core": [
+      "语言习得"
+    ],
+    "support": 0.030269058295964126,
+    "count": 27,
+    "stability": 1.0,
+    "method": "A",
+    "phi": null
+  }
+]

@@ -1,0 +1,162 @@
+[
+  {
+    "core": [
+      "乘法"
+    ],
+    "support": 0.4307228915662651,
+    "count": 143,
+    "stability": 0.8671328671328671,
+    "method": "C",
+    "phi": null
+  },
+  {
+    "core": [
+      "有理数"
+    ],
+    "support": 0.39759036144578314,
+    "count": 132,
+    "stability": 1.0,
+    "method": "C",
+    "phi": null
+  },
+  {
+    "core": [
+      "复数"
+    ],
+    "support": 0.3433734939759036,
+    "count": 114,
+    "stability": 1.0,
+    "method": "C",
+    "phi": null
+  },
+  {
+    "core": [
+      "整数"
+    ],
+    "support": 0.3373493975903614,
+    "count": 112,
+    "stability": 1.0,
+    "method": "C",
+    "phi": null
+  },
+  {
+    "core": [
+      "维数"
+    ],
+    "support": 0.28313253012048195,
+    "count": 94,
+    "stability": 0.925531914893617,
+    "method": "C",
+    "phi": null
+  },
+  {
+    "core": [
+      "线性组合"
+    ],
+    "support": 0.2740963855421687,
+    "count": 91,
+    "stability": 1.0,
+    "method": "C",
+    "phi": null
+  },
+  {
+    "core": [
+      "环"
+    ],
+    "support": 0.2680722891566265,
+    "count": 89,
+    "stability": 1.0,
+    "method": "C",
+    "phi": null
+  },
+  {
+    "core": [
+      "序"
+    ],
+    "support": 0.2680722891566265,
+    "count": 89,
+    "stability": 1.0,
+    "method": "C",
+    "phi": null
+  },
+  {
+    "core": [
+      "矩阵"
+    ],
+    "support": 0.2620481927710843,
+    "count": 87,
+    "stability": 0.9310344827586207,
+    "method": "C",
+    "phi": null
+  },
+  {
+    "core": [
+      "减法"
+    ],
+    "support": 0.25903614457831325,
+    "count": 86,
+    "stability": 0.9069767441860465,
+    "method": "C",
+    "phi": null
+  },
+  {
+    "core": [
+      "线性映射"
+    ],
+    "support": 0.20481927710843373,
+    "count": 68,
+    "stability": 1.0,
+    "method": "C",
+    "phi": null
+  },
+  {
+    "core": [
+      "群"
+    ],
+    "support": 0.19578313253012047,
+    "count": 65,
+    "stability": 1.0,
+    "method": "C",
+    "phi": null
+  },
+  {
+    "core": [
+      "基"
+    ],
+    "support": 0.1686746987951807,
+    "count": 56,
+    "stability": 1.0,
+    "method": "C",
+    "phi": null
+  },
+  {
+    "core": [
+      "域"
+    ],
+    "support": 0.10240963855421686,
+    "count": 34,
+    "stability": 1.0,
+    "method": "C",
+    "phi": null
+  },
+  {
+    "core": [
+      "向量空间"
+    ],
+    "support": 0.05120481927710843,
+    "count": 17,
+    "stability": 1.0,
+    "method": "C",
+    "phi": null
+  },
+  {
+    "core": [
+      "欧氏空间"
+    ],
+    "support": 0.02108433734939759,
+    "count": 7,
+    "stability": 1.0,
+    "method": "C",
+    "phi": null
+  }
+]
