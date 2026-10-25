@@ -44,8 +44,8 @@ os.environ["CONFIG_METHOD"] = _args.config
 
 # ---- 2. Path setup ----
 _HERE = os.path.dirname(os.path.abspath(__file__))
-_CG = os.path.dirname(_HERE)
-_SRC = os.path.dirname(_CG)
+_CG   = os.path.dirname(_HERE)
+_SRC  = os.path.dirname(_CG)
 _PROJ = os.path.dirname(_SRC)
 for _p in (_HERE, _CG, _SRC, _PROJ):
     if _p not in sys.path:
@@ -162,8 +162,7 @@ def export_g1(universe, scale, config, out_root):
 # ===================================================================== #
 def main():
     default_root = Path(_PROJ) / "results" / "g1_export"
-    out_root = (Path(_args.out_root) if _args.out_root
-                else default_root).resolve()
+    out_root = (Path(_PROJ) / "results" / "g1_export").resolve()
     out_root.mkdir(parents=True, exist_ok=True)
 
     print("=" * 68)

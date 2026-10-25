@@ -29,8 +29,10 @@ import subprocess
 from pathlib import Path
 
 _HERE = Path(__file__).resolve().parent      # .../endo_concept
-_CG = _HERE.parent                            # .../compression_graph
-_PROJ = _CG.parent                            # project root
+_CG   = _HERE.parents[0]                      # .../compression_graph
+_PROJ = _HERE.parents[2]                      # 项目根
+_RESULTS = _PROJ / "results"
+
 
 
 def _run(cmd, cwd, env):
@@ -49,8 +51,8 @@ def main():
     base_env = os.environ.copy()
     base_env["PYTHONHASHSEED"] = "0"       # 固定 set/frozenset 迭代顺序
 
-    raw_root = _PROJ / "results" / "compression_graph"
-    endo_result = _PROJ / "results" / "endo_result"
+    raw_root = _RESULTS / "compression_graph"
+    endo_result = _RESULTS / "endo_result"
     endo_result.mkdir(parents=True, exist_ok=True)
 
     for config_method in config_methods:

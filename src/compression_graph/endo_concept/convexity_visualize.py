@@ -36,9 +36,6 @@ import sys
 from pathlib import Path
 
 _parser = argparse.ArgumentParser()
-_parser.add_argument("--root", default=None,
-                     help="Path to four_dim_vectors/. "
-                          "Default: <script_dir>/four_dim_vectors")
 _parser.add_argument("--only", nargs="+",
                      choices=["lines", "heatmaps", "surfaces",
                               "config", "density"],
@@ -52,7 +49,7 @@ _parser.add_argument("--root", default=None)
 _args = _parser.parse_args()
 
 _HERE = Path(__file__).resolve().parent
-_PROJ = _HERE.parent.parent.parent          # .../CognitiveGraph_DiscoverConceptLocation
+_PROJ = _HERE.parents[2]
 _ROOT_DEFAULT = _PROJ / "results" / "four_dim_vectors"
 
 _root = Path(_args.root) if _args.root else _ROOT_DEFAULT

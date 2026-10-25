@@ -41,12 +41,15 @@ random.seed(42)
 np.random.seed(42)
 os.environ.setdefault("PYTHONHASHSEED", "0")
 
-_HERE = os.path.dirname(os.path.abspath(__file__))   # .../endo_concept
-_CG = os.path.dirname(_HERE)                         # .../compression_graph
-_PROJ = os.path.dirname(_CG)                         # project root
-for _p in (_HERE, _CG, _PROJ):
-    if _p not in sys.path:
-        sys.path.insert(0, _p)
+_HERE = Path(__file__).resolve().parent          # .../endo_concept
+_CG   = _HERE.parents[0]                         # .../compression_graph
+_SRC  = _HERE.parents[1]                         # .../src
+_PROJ = _HERE.parents[2]                         # 项目根
+_RESULTS = _PROJ / "results"
+
+for _p in (_HERE, _CG, _SRC, _PROJ):
+    if str(_p) not in sys.path:
+        sys.path.insert(0, str(_p))
 
 import pandas as pd
 
@@ -67,23 +70,18 @@ def _config_method():
 
 
 def _resolve_raw_csv(cfg):
-    """Resolve the raw compression events CSV."""
+    # 1) 环境变量优先（batch_run.py 传进来的那份）
     env = os.environ.get("ENDO_RAW_CSV")
-    if env:
-        p = Path(env)
-        if p.exists():
-            return p
+    if env and Path(env).exists():
+        return Path(env)
 
-    raw_csv = Path(cfg["raw_events_path"])
-    if raw_csv.exists():
-        return raw_csv
+    # 2) 直接指向项目根 results/compression_graph/
+    direct = _RESULTS / "compression_graph" / "raw_compression_events.csv"
+    if direct.exists():
+        return direct
 
-    alt = Path(_PROJ) / "results" / "compression_graph" / "raw_compression_events.csv"
-    if alt.exists():
-        return alt
-
-    return raw_csv
-
+    # 3) 最后才回退到 config 里的值（仅作提示用）
+    return Path(cfg["raw_events_path"])
 
 # ====================================================================== #
 def load_events(csv_path, scale):
@@ -262,12 +260,11 @@ def main():
 
     default_output = Path(_PROJ) / "results" / "endo_result"
 
-    output_root = Path(os.environ.get("ENDO_OUTPUT_DIR", str(default_output)))
-    if not output_root.is_absolute():
-        output_root = (Path(_PROJ) / output_root).resolve()
+    env_dir = os.environ.get("ENDO_OUTPUT_DIR")
+    if env_dir:
+        output_root = Path(env_dir).resolve()
     else:
-        output_root = output_root.resolve()
-
+        output_root = (_RESULTS / "endo_result").resolve()
     output_root.mkdir(parents=True, exist_ok=True)
 
     raw_csv = _resolve_raw_csv(cfg)

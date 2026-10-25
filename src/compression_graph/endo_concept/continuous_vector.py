@@ -49,10 +49,9 @@ _parser.add_argument("--n-splits", type=int, default=10)
 _args = _parser.parse_args()
 
 _HERE = Path(__file__).resolve().parent
-_PROJ = _HERE.parent.parent.parent          # .../CognitiveGraph_DiscoverConceptLocation
+_PROJ = _HERE.parents[2]
 _RESULTS = _PROJ / "results"
-
-for _p in (_HERE, _HERE.parent, _HERE.parent.parent, _PROJ):
+for _p in (_HERE, _HERE.parents[0], _HERE.parents[1], _PROJ):
     if str(_p) not in sys.path:
         sys.path.insert(0, str(_p))
 
@@ -60,18 +59,9 @@ import numpy as np
 import pandas as pd
 import networkx as nx
 
-_args.g1_root = (
-    Path(_args.g1_root) if _args.g1_root
-    else _RESULTS / "g1_export"
-)
-_args.endo_root = (
-    Path(_args.endo_root) if _args.endo_root
-    else _RESULTS / "endo_result"
-)
-_args.out_dir = (
-    Path(_args.out_dir) if _args.out_dir
-    else _RESULTS / "four_dim_vectors"
-)
+_args.g1_root   = Path(_args.g1_root)   if _args.g1_root   else _RESULTS / "g1_export"
+_args.endo_root = Path(_args.endo_root) if _args.endo_root else _RESULTS / "endo_result"
+_args.out_dir   = Path(_args.out_dir)   if _args.out_dir   else _RESULTS / "four_dim_vectors"
 
 # ===================================================================== #
 # Helpers
