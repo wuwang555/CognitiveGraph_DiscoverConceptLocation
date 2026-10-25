@@ -1,0 +1,262 @@
+[
+  {
+    "core": [
+      "实数"
+    ],
+    "support": 0.38934426229508196,
+    "count": 285,
+    "stability": 0.8315789473684211,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "维数"
+    ],
+    "support": 0.38114754098360654,
+    "count": 279,
+    "stability": 0.7598566308243727,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "有理数"
+    ],
+    "support": 0.3729508196721312,
+    "count": 273,
+    "stability": 0.8791208791208791,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "线性组合"
+    ],
+    "support": 0.366120218579235,
+    "count": 268,
+    "stability": 0.9067164179104478,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "线性无关"
+    ],
+    "support": 0.366120218579235,
+    "count": 268,
+    "stability": 0.7089552238805971,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "矩阵"
+    ],
+    "support": 0.3592896174863388,
+    "count": 263,
+    "stability": 0.7376425855513308,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "自然数"
+    ],
+    "support": 0.3592896174863388,
+    "count": 263,
+    "stability": 0.6539923954372624,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "线性映射"
+    ],
+    "support": 0.33469945355191255,
+    "count": 245,
+    "stability": 0.7836734693877551,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "向量空间"
+    ],
+    "support": 0.31830601092896177,
+    "count": 233,
+    "stability": 1.0,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "复数"
+    ],
+    "support": 0.3046448087431694,
+    "count": 223,
+    "stability": 0.7443946188340808,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "除法"
+    ],
+    "support": 0.29918032786885246,
+    "count": 219,
+    "stability": 0.9634703196347032,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "加法"
+    ],
+    "support": 0.28688524590163933,
+    "count": 210,
+    "stability": 0.8285714285714286,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "基"
+    ],
+    "support": 0.28415300546448086,
+    "count": 208,
+    "stability": 0.8605769230769231,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "减法"
+    ],
+    "support": 0.27595628415300544,
+    "count": 202,
+    "stability": 0.7227722772277227,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "整数"
+    ],
+    "support": 0.26229508196721313,
+    "count": 192,
+    "stability": 1.0,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "乘法"
+    ],
+    "support": 0.22131147540983606,
+    "count": 162,
+    "stability": 0.9259259259259259,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "群"
+    ],
+    "support": 0.1994535519125683,
+    "count": 146,
+    "stability": 1.0,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "域"
+    ],
+    "support": 0.11612021857923498,
+    "count": 85,
+    "stability": 1.0,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "面"
+    ],
+    "support": 0.09562841530054644,
+    "count": 70,
+    "stability": 0.7714285714285715,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "线"
+    ],
+    "support": 0.09562841530054644,
+    "count": 70,
+    "stability": 0.7714285714285715,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "环"
+    ],
+    "support": 0.0942622950819672,
+    "count": 69,
+    "stability": 1.0,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "序"
+    ],
+    "support": 0.0778688524590164,
+    "count": 57,
+    "stability": 1.0,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "点"
+    ],
+    "support": 0.06420765027322405,
+    "count": 47,
+    "stability": 1.0,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "欧氏空间"
+    ],
+    "support": 0.05737704918032787,
+    "count": 42,
+    "stability": 1.0,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "巴拿赫空间"
+    ],
+    "support": 0.03278688524590164,
+    "count": 24,
+    "stability": 1.0,
+    "method": "B",
+    "phi": null
+  },
+  {
+    "core": [
+      "距离"
+    ],
+    "support": 0.02185792349726776,
+    "count": 16,
+    "stability": 1.0,
+    "method": "B",
+    "phi": null
+  }
+]

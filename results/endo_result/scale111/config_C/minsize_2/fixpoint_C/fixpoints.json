@@ -1,0 +1,212 @@
+[
+  {
+    "core": [
+      "整除"
+    ],
+    "support": 0.30155979202772965,
+    "count": 174,
+    "stability": 1.0,
+    "method": "C",
+    "phi": null
+  },
+  {
+    "core": [
+      "模运算"
+    ],
+    "support": 0.28422876949740034,
+    "count": 164,
+    "stability": 0.9634146341463414,
+    "method": "C",
+    "phi": null
+  },
+  {
+    "core": [
+      "乘法"
+    ],
+    "support": 0.2807625649913345,
+    "count": 162,
+    "stability": 0.9567901234567902,
+    "method": "C",
+    "phi": null
+  },
+  {
+    "core": [
+      "费马小定理"
+    ],
+    "support": 0.24956672443674177,
+    "count": 144,
+    "stability": 1.0,
+    "method": "C",
+    "phi": null
+  },
+  {
+    "core": [
+      "欧拉函数"
+    ],
+    "support": 0.21490467937608318,
+    "count": 124,
+    "stability": 0.9758064516129032,
+    "method": "C",
+    "phi": null
+  },
+  {
+    "core": [
+      "有理数"
+    ],
+    "support": 0.21317157712305027,
+    "count": 123,
+    "stability": 1.0,
+    "method": "C",
+    "phi": null
+  },
+  {
+    "core": [
+      "覆叠空间"
+    ],
+    "support": 0.15944540727902945,
+    "count": 92,
+    "stability": 1.0,
+    "method": "C",
+    "phi": null
+  },
+  {
+    "core": [
+      "黎曼假设"
+    ],
+    "support": 0.14211438474870017,
+    "count": 82,
+    "stability": 1.0,
+    "method": "C",
+    "phi": null
+  },
+  {
+    "core": [
+      "连通"
+    ],
+    "support": 0.1386481802426343,
+    "count": 80,
+    "stability": 1.0,
+    "method": "C",
+    "phi": null
+  },
+  {
+    "core": [
+      "基本群"
+    ],
+    "support": 0.13344887348353554,
+    "count": 77,
+    "stability": 1.0,
+    "method": "C",
+    "phi": null
+  },
+  {
+    "core": [
+      "豪斯多夫空间"
+    ],
+    "support": 0.1265164644714038,
+    "count": 73,
+    "stability": 1.0,
+    "method": "C",
+    "phi": null
+  },
+  {
+    "core": [
+      "序"
+    ],
+    "support": 0.11438474870017332,
+    "count": 66,
+    "stability": 1.0,
+    "method": "C",
+    "phi": null
+  },
+  {
+    "core": [
+      "加法"
+    ],
+    "support": 0.10571923743500866,
+    "count": 61,
+    "stability": 0.9672131147540983,
+    "method": "C",
+    "phi": null
+  },
+  {
+    "core": [
+      "复数"
+    ],
+    "support": 0.10398613518197573,
+    "count": 60,
+    "stability": 1.0,
+    "method": "C",
+    "phi": null
+  },
+  {
+    "core": [
+      "整数"
+    ],
+    "support": 0.10051993067590988,
+    "count": 58,
+    "stability": 1.0,
+    "method": "C",
+    "phi": null
+  },
+  {
+    "core": [
+      "紧致"
+    ],
+    "support": 0.08145580589254767,
+    "count": 47,
+    "stability": 1.0,
+    "method": "C",
+    "phi": null
+  },
+  {
+    "core": [
+      "同胚"
+    ],
+    "support": 0.0658578856152513,
+    "count": 38,
+    "stability": 1.0,
+    "method": "C",
+    "phi": null
+  },
+  {
+    "core": [
+      "线性组合"
+    ],
+    "support": 0.038128249566724434,
+    "count": 22,
+    "stability": 1.0,
+    "method": "C",
+    "phi": null
+  },
+  {
+    "core": [
+      "维数"
+    ],
+    "support": 0.038128249566724434,
+    "count": 22,
+    "stability": 0.9545454545454546,
+    "method": "C",
+    "phi": null
+  },
+  {
+    "core": [
+      "线性无关"
+    ],
+    "support": 0.036395147313691506,
+    "count": 21,
+    "stability": 1.0,
+    "method": "C",
+    "phi": null
+  },
+  {
+    "core": [
+      "开集"
+    ],
+    "support": 0.02772963604852686,
+    "count": 16,
+    "stability": 1.0,
+    "method": "C",
+    "phi": null
+  }
+]

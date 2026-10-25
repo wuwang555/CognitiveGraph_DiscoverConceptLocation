@@ -1,0 +1,193 @@
+CognitiveGraph_DiscoverConceptLocation/
+├── config.py                                        # 全局基础参数、个体变异范围
+├── requirements.txt
+├── LICENSE
+├── project_structure.txt                            # 结构说明（英文注释版）
+├── project_structure_ZH.txt                         # 结构说明（中文注释版，本文件）
+├── emergence_results_20260214_191918.xlsx           # 一阶系统原始产出（Excel，Concept Compressions / Migrations）
+├── emergence_results_20260214_192116.xlsx           # 同上，另一次运行
+│
+├── src/
+│   ├── compression_graph/
+│   │   ├── cg_core.py                              # 无向压缩图核心（节点/边/权重）
+│   │   ├── config_compression.py                   # 压缩图配置
+│   │   ├── detector.py                             # 压缩/迁移候选检测（Φ、路径分数）
+│   │   ├── pipeline.py                             # 压缩图流水线
+│   │   ├── raw_recorder.py                         # 原始压缩事件记录器
+│   │   ├── run_static.py                           # 生成 raw_compression_events.csv 等静态结果
+│   │   ├── table_export.py                         # CSV / 表格导出
+│   │   ├── visualize.py                            # 关系图、边分布、迁移路径可视化
+│   │   ├── README.md
+│   │   ├── README_ZH.md
+│   │   ├── __init__.py
+│   │   │
+│   │   ├── endo_concept/
+│   │   │   ├── batch_run.py                        # 批量跑 A/B/C：run_static + run_endo
+│   │   │   ├── boundary.py                         # 边界势 Φ 计算与汇总
+│   │   │   ├── config_endo.py                      # endo-concept 配置
+│   │   │   ├── continuous_vector.py                # 四维连续表示（b,c,g1,g2）+ PCA + kNN
+│   │   │   ├── convexity_visualize.py              # 凸性网格可视化（2D/3D/热力图/密度）
+│   │   │   ├── endo_eval.py                        # endo-concept 评估入口
+│   │   │   ├── fixpoint.py                         # 不动点检测（方法 A/B/C）
+│   │   │   ├── g1_exporter.py                      # 导出 G1 能量图数据（g1_nodes / g1_edges / energy_history / traversal_freq）
+│   │   │   ├── high_order.py                       # 高阶修正 λ_C
+│   │   │   ├── logic_derive.py                     # 从不动点派生有向逻辑边
+│   │   │   ├── multichannel.py                     # 多通道边权重重建（sim + logic + energy）
+│   │   │   ├── run_endo.py                         # endo-concept 主入口（scale × minsize × method）
+│   │   │   ├── run_validation.py                   # 验证流程编排
+│   │   │   ├── six_quadrant_eval.py                # 六象限离散评估（历史方法）
+│   │   │   ├── structure.py                        # 构建 CONCEPT_STRUCTURE
+│   │   │   ├── README_ZH.md
+│   │   │   ├── endo_result.zip                     # 历史结果打包
+│   │   │   └── __init__.py
+│   │   │
+│   │   └── objective_metrics/
+│   │       ├── potential.py                        # Φ 分布统计
+│   │       ├── power_law.py                        # 能量下降幂律拟合
+│   │       ├── run_all.py                          # 一键跑全部客观指标并导出 CSV
+│   │       ├── threshold_scan.py                   # 压缩/迁移阈值扫描
+│   │       ├── zipf.py                             # 边/中心/节点总频 Zipf
+│   │       └── __init__.py
+│   │
+│   ├── core/
+│   │   ├── cognitive_graph.py                      # 认知图
+│   │   ├── cognitive_states.py                     # 认知状态
+│   │   ├── semantic_network.py                     # 语义网络
+│   │   └── __init__.py
+│   │
+│   ├── emergence/
+│   │   ├── detector_fixed.py                       # 涌现检测
+│   │   ├── metrics.py                              # 涌现指标
+│   │   ├── observer.py                             # 观测器
+│   │   ├── universe.py                             # 原始认知宇宙
+│   │   ├── universe_enhanced.py                    # 增强版认知宇宙（含涌现检测）
+│   │   └── __init__.py
+│   │
+│   └── utils/
+│       ├── individual_variation.py                 # 个体参数变异
+│       ├── visualization.py                        # 通用可视化
+│       └── __init__.py
+│
+└── results/
+    ├── compression_graph/                          # 第 1–2 环：G2 关系图 + 压缩/迁移检测
+    │   ├── raw_compression_events.csv              # ★ 原始压缩事件，所有下游分析的唯一数据源
+    │   ├── compression_edges.csv                   # clique 关系图边表（count = 共现次数，不归一化）
+    │   ├── summary.csv                             # 每规模汇总：事件数 / 节点数 / 边数 / 候选数
+    │   ├── pipeline_scale{51,71,91,111}.json       # 单规模全量 JSON（图统计 + 候选）
+    │   ├── candidate_compressions.csv              # 压缩候选，按 Φ 降序（center/cluster/size/phi）
+    │   ├── candidate_migrations.csv                # 迁移候选，按路径平均共现降序
+    │   ├── graph_scale{51,71,91,111}.png           # 关系图可视化
+    │   ├── edge_dist_scale{51,71,91,111}.png       # 边权分布
+    │   └── migrations_scale{51,71,91,111}.png      # 迁移路径高亮
+    │
+    ├── objective_metrics_results/                  # 第 3 环：客观指标（与原论文一致）
+    │   ├── power_law.csv                           # 能量幂律拟合 E(t)=a·t^-b+c
+    │   ├── zipf_edges.csv                          # 边共现 Zipf
+    │   ├── zipf_centers.csv                        # 中心节点频率 Zipf
+    │   ├── zipf_node_totals.csv                    # 节点总参与频率 Zipf
+    │   ├── potential.csv                           # Φ 分布统计
+    │   ├── threshold_scan_compression.csv          # 压缩阈值扫描
+    │   └── threshold_scan_migration.csv            # 迁移阈值扫描
+    │
+    ├── endo_result/                                # 第 4 环：不动点检测与概念结构
+    │   ├── endo_summary.csv                        # 跨 config/scale/minsize/method 汇总
+    │   ├── AI对话提示词.txt                        # 分析用对话提示词存档
+    │   ├── 对数据的分析及其背景.md                 # 数据分析与背景说明
+    │   ├── data_analysis/
+    │   │   └── base_fixpoint_method/
+    │   │       ├── method_B/
+    │   │       │   ├── configA.md
+    │   │       │   ├── configB.md
+    │   │       │   └── configC.md
+    │   │       ├── method_C/
+    │   │       │   ├── configA.md
+    │   │       │   ├── configB.md
+    │   │       │   └── configC.md
+    │   │       └── summary/
+    │   │           ├── method_B.md
+    │   │           ├── method_C.md
+    │   │           └── method_B-C.md
+    │   ├── raw_events_A/raw_compression_events.csv # A 概念集的原始事件
+    │   ├── raw_events_B/raw_compression_events.csv # B 概念集的原始事件
+    │   ├── raw_events_C/raw_compression_events.csv # C 概念集的原始事件
+    │   └── scale{51,71,91,111}/
+    │       ├── config_A/minsize_1/fixpoint_{A,B,C}/
+    │       │   ├── fixpoints.json                  # 不动点列表（core/support/stability/phi）
+    │       │   ├── concept_structure.json          # 结构化定义（boundary/logic/energy/sources）
+    │       │   ├── logic_edges.csv                 # 有向逻辑边（core→boundary，logic_strength）
+    │       │   ├── edge_weights.csv                # 多通道边权 + 高阶修正边权
+    │       │   └── run_meta.json                   # 运行参数与可复现元数据
+    │       ├── config_B/minsize_{1,2,3}/fixpoint_{A,B,C}/  # 同结构，覆盖三种 minsize
+    │       │   ├── fixpoints.json
+    │       │   ├── concept_structure.json
+    │       │   ├── logic_edges.csv
+    │       │   ├── edge_weights.csv
+    │       │   └── run_meta.json
+    │       └── config_C/minsize_{1,2,3}/fixpoint_{A,B,C}/  # 同结构，覆盖三种 minsize
+    │           ├── fixpoints.json
+    │           ├── concept_structure.json
+    │           ├── logic_edges.csv
+    │           ├── edge_weights.csv
+    │           └── run_meta.json
+    │
+    ├── four_dim_vectors/                           # 第 5 环：四维连续概念空间
+    │   ├── all_summary.csv                         # 跨 config/scale 描述统计 + 相关矩阵 + PCA 方差
+    │   ├── config_A/scale{51,71,91,111}.csv        # 四维坐标：b, c, g1_z, g2_z, c_norm, g1_norm, g2_norm
+    │   ├── config_A/scale{51,71,91,111}_pca.csv    # PCA 分解（PC1 = C 轴，方差 67–75%）
+    │   ├── config_A/scale{51,71,91,111}_knn.csv    # 4D kNN 邻居
+    │   ├── config_B/scale{51,71,91,111}.csv        # 同上（B 概念集）
+    │   ├── config_B/scale{51,71,91,111}_pca.csv
+    │   ├── config_B/scale{51,71,91,111}_knn.csv
+    │   ├── config_C/scale{51,71,91,111}.csv        # 同上（C 概念集）
+    │   ├── config_C/scale{51,71,91,111}_pca.csv
+    │   ├── config_C/scale{51,71,91,111}_knn.csv
+    │   └── convexity_sweep/                        # 第 6 环：凸性检验（自测版 + 留出版）
+    │       ├── grids/                              # 自测版网格（expert 建包 → expert 测自己）
+    │       │   ├── grid_ALL.csv
+    │       │   └── grid_{A,B,C}_scale{51,71,91,111}.csv
+    │       ├── pivots/                             # 自测版透视表
+    │       │   ├── pivot_expert_mean_convexity_ratio_{3d,4d}.csv
+    │       │   ├── pivot_expert_max_convexity_ratio_{3d,4d}.csv
+    │       │   ├── pivot_general_outside_fraction_{3d,4d}.csv
+    │       │   ├── pivot_general_mean_convexity_ratio_{3d,4d}.csv
+    │       │   ├── pivot_volume_ratio_{3d,4d}.csv
+    │       │   └── pivot_gof_3d_{A,B,C}.csv
+    │       ├── holdout/
+    │       │   ├── grids/                          # ★ 留出版网格（一半 expert 建包，另一半 + general 测）
+    │       │   │   ├── holdout_ALL.csv
+    │       │   │   └── holdout_{A,B,C}_scale{51,71,91,111}.csv
+    │       │   └── pivots/                         # 留出版透视表
+    │       │       ├── pivot_test_expert_inside_fraction_{3d,4d}.csv
+    │       │       ├── pivot_test_expert_inside_std_{3d,4d}.csv
+    │       │       ├── pivot_general_inside_fraction_{3d,4d}.csv
+    │       │       ├── pivot_general_inside_std_{3d,4d}.csv
+    │       │       ├── pivot_separation_{3d,4d}.csv
+    │       │       ├── pivot_separation_3d_{A,B,C}.csv
+    │       │       ├── pivot_test_expert_mean_ratio_{3d,4d}.csv
+    │       │       └── pivot_general_mean_ratio_{3d,4d}.csv
+    │       └── figures/
+    │           ├── 2d_heatmaps/                    # x=b_lo，y=c_hi，色 = metric
+    │           ├── 2d_lines/                       # x=c_hi，线 = b_lo
+    │           ├── 3d_surfaces/                    # (c_hi, b_lo) → metric 曲面
+    │           ├── 4d_density/                     # (b, c) 密度图
+    │           └── cross_config/                   # 固定 b_lo，比较 config
+    │
+    ├── g1_export/                                  # 辅助：G1 能量图导出（供 four_dim_vectors 的 g1_z 使用）
+    │   ├── config_A/scale{51,71,91,111}/
+    │   │   ├── g1_nodes.csv                        # 节点级聚合：mean_weight / min_weight / weight_drop / traversal_freq
+    │   │   ├── g1_edges.csv                        # G1 边表（weight / original_weight / traversal_count / similarity）
+    │   │   ├── energy_history.csv                  # 全局能量序列（iteration, energy）
+    │   │   └── traversal_freq.csv                  # 节点遍历频率
+    │   ├── config_B/scale{51,71,91,111}/           # 同结构
+    │   └── config_C/scale{51,71,91,111}/           # 同结构
+    │
+    └── six_quadrant_results/                       # 历史：离散六象限（已被四维连续坐标取代）
+        ├── config_A/
+        │   ├── six_quadrant_scale{51,71,91,111}.csv
+        │   └── summary.csv
+        ├── config_B/
+        │   ├── six_quadrant_scale{51,71,91,111}.csv
+        │   └── summary.csv
+        └── config_C/
+            ├── six_quadrant_scale{51,71,91,111}.csv
+            └── summary.csv

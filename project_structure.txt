@@ -1,133 +1,193 @@
-C:.
-│  .gitignore
-│  config.py
-│  LICENSE
-│  README.md
-│  README_zh.md
-│  requirements.txt
-│  run_experiments.py
+CognitiveGraph_DiscoverConceptLocation/
+├── config.py                                        # Global base parameters and variation ranges
+├── requirements.txt
+├── LICENSE
+├── project_structure.txt                            # Structure doc (English, this file)
+├── project_structure_ZH.txt                         # Structure doc (Chinese)
+├── emergence_results_20260214_191918.xlsx           # Stage-1 raw output (Excel: Concept Compressions / Migrations)
+├── emergence_results_20260214_192116.xlsx           # Same, second run
 │
-├─paper
-│  └─Manuscript
-│      │  CognitiveGraph.tex
-│      │  references.bib
-│      │
-│      └─figures
-│              cognitive_graph_three_stages.png
-│              cognitive_graph_three_stages_zh.png
+├── src/
+│   ├── compression_graph/
+│   │   ├── cg_core.py                              # Undirected compression graph core (nodes/edges/weights)
+│   │   ├── config_compression.py                   # Compression-graph config
+│   │   ├── detector.py                             # Compression/migration candidate detection (Φ, path score)
+│   │   ├── pipeline.py                             # Compression-graph pipeline
+│   │   ├── raw_recorder.py                         # Raw compression-event recorder
+│   │   ├── run_static.py                           # Produces raw_compression_events.csv and static outputs
+│   │   ├── table_export.py                         # CSV / table export
+│   │   ├── visualize.py                            # Graph, edge-distribution, migration visualizations
+│   │   ├── README.md
+│   │   ├── README_ZH.md
+│   │   ├── __init__.py
+│   │   │
+│   │   ├── endo_concept/
+│   │   │   ├── batch_run.py                        # Batch A/B/C: run_static + run_endo
+│   │   │   ├── boundary.py                         # Boundary potential Φ computation and summary
+│   │   │   ├── config_endo.py                      # endo-concept config
+│   │   │   ├── continuous_vector.py                # 4D continuous representation (b,c,g1,g2) + PCA + kNN
+│   │   │   ├── convexity_visualize.py              # Convexity-grid visualization (2D/3D/heatmap/density)
+│   │   │   ├── endo_eval.py                        # endo-concept evaluation entry
+│   │   │   ├── fixpoint.py                         # Fixpoint detection (methods A/B/C)
+│   │   │   ├── g1_exporter.py                      # Export G1 energy-graph data (g1_nodes / g1_edges / energy_history / traversal_freq)
+│   │   │   ├── high_order.py                       # High-order correction λ_C
+│   │   │   ├── logic_derive.py                     # Derive directed logic edges from fixpoints
+│   │   │   ├── multichannel.py                     # Multi-channel edge-weight rebuild (sim + logic + energy)
+│   │   │   ├── run_endo.py                         # endo-concept main entry (scale × minsize × method)
+│   │   │   ├── run_validation.py                   # Validation orchestration
+│   │   │   ├── six_quadrant_eval.py                # Six-quadrant discrete evaluation (legacy)
+│   │   │   ├── structure.py                        # Build CONCEPT_STRUCTURE
+│   │   │   ├── README_ZH.md
+│   │   │   ├── endo_result.zip                     # Legacy result bundle
+│   │   │   └── __init__.py
+│   │   │
+│   │   └── objective_metrics/
+│   │       ├── potential.py                        # Φ distribution statistics
+│   │       ├── power_law.py                        # Energy-decline power-law fit
+│   │       ├── run_all.py                          # One-shot run for all objective metrics (CSV)
+│   │       ├── threshold_scan.py                   # Compression/migration threshold scans
+│   │       ├── zipf.py                             # Edge / center / node-total Zipf
+│   │       └── __init__.py
+│   │
+│   ├── core/
+│   │   ├── cognitive_graph.py                      # Cognitive graph
+│   │   ├── cognitive_states.py                     # Cognitive states
+│   │   ├── semantic_network.py                     # Semantic network
+│   │   └── __init__.py
+│   │
+│   ├── emergence/
+│   │   ├── detector_fixed.py                       # Emergence detection
+│   │   ├── metrics.py                              # Emergence metrics
+│   │   ├── observer.py                             # Observer
+│   │   ├── universe.py                             # Original cognitive universe
+│   │   ├── universe_enhanced.py                    # Enhanced universe (with emergence detection)
+│   │   └── __init__.py
+│   │
+│   └── utils/
+│       ├── individual_variation.py                 # Individual parameter variation
+│       ├── visualization.py                        # General visualization helpers
+│       └── __init__.py
 │
-├─results
-│  │  111_concepts.xlsx
-│  │  51_concepts.xlsx
-│  │  71_concepts.xlsx
-│  │  91_concepts.xlsx
-│  │  DATA_DICTIONARY.md
-│  │
-│  ├─algebra
-│  │      algebra_validation_results_20260320_111020.json
-│  │
-│  ├─analysis
-│  │  ├─add_scan
-│  │  │      threshold_scan_plot.png
-│  │  │      threshold_scan_results.json
-│  │  │
-│  │  ├─objective_metrics
-│  │  │  │  individual_summary_20260320_111042.json
-│  │  │  │  zipf_center_result_20260320_111042.json
-│  │  │  │  zipf_node_total_result_20260320_111042.json
-│  │  │  │
-│  │  │  └─figures
-│  │  │          energy_rate_scale51_ind0_20260320_111042.png
-│  │  │          zipf_center_20260320_111042.png
-│  │  │          zipf_node_total_20260320_111042.png
-│  │  │
-│  │  └─potential_analysis
-│  │          potential_dist_scale51.png
-│  │          potential_dist_scale71.png
-│  │          potential_dist_scale91.png
-│  │          potential_dist_scale111.png
-│  │          potential_trend.png
-│  │
-│  ├─batch_experiments
-│  │      config_20260320_105541.json
-│  │      detailed_results_20260320_105541.csv
-│  │      summary_20260320_105541.json
-│  │
-│  ├─emergence
-│  │  │  emergence_51_concepts_20260320_110735.json
-│  │  │  emergence_71_concepts_20260320_110811.json
-│  │  │  emergence_91_concepts_20260320_110901.json
-│  │  │  emergence_111_concepts_20260320_111015.json
-│  │  │
-│  │  └─figures
-│  │          emergence_visualization_20260320_110633.png
-│  │          emergence_visualization_20260320_110711.png
-│  │
-│  ├─population
-│  │      energy_history_个体_1_20260320_105557.csv
-│  │      energy_history_个体_2_20260320_105557.csv
-│  │
-│  ├─semantic_network
-│  │      semantic_network_20260320_111029.png
-│  │
-│  └─visualizations
-│          cognitive_graph_20260320_105541.png
-│          cognitive_states_20260320_105541.png
-│          semantic_network_20260320_105541.png
-│
-└─src
-    │  main.py
+└── results/
+    ├── compression_graph/                          # Ring 1–2: G2 graph + compression/migration detection
+    │   ├── raw_compression_events.csv              # ★ Raw compression events; single source for all downstream analysis
+    │   ├── compression_edges.csv                   # Clique edge list (count = co-occurrence, no normalization)
+    │   ├── summary.csv                             # Per-scale summary: #events / #nodes / #edges / #candidates
+    │   ├── pipeline_scale{51,71,91,111}.json       # Full per-scale JSON (graph stats + candidates)
+    │   ├── candidate_compressions.csv              # Compression candidates, sorted by Φ desc (center/cluster/size/phi)
+    │   ├── candidate_migrations.csv                # Migration candidates, sorted by mean co-occurrence desc
+    │   ├── graph_scale{51,71,91,111}.png           # Graph visualization
+    │   ├── edge_dist_scale{51,71,91,111}.png       # Edge-weight distribution
+    │   └── migrations_scale{51,71,91,111}.png      # Migration-path highlight
     │
-    ├─algebra
-    │      algebra_experiments.py
-    │      cognitive_semigroup.py
-    │      cognitive_symmetry.py
-    │      group_action.py
-    │      integration.py
-    │      lie_group_cognitive.py
-    │      __init__.py
+    ├── objective_metrics_results/                  # Ring 3: objective metrics (aligned with the original paper)
+    │   ├── power_law.csv                           # Energy power-law fit E(t)=a·t^-b+c
+    │   ├── zipf_edges.csv                          # Edge co-occurrence Zipf
+    │   ├── zipf_centers.csv                        # Center-frequency Zipf
+    │   ├── zipf_node_totals.csv                    # Node-total-frequency Zipf
+    │   ├── potential.csv                           # Φ distribution statistics
+    │   ├── threshold_scan_compression.csv          # Compression threshold scan
+    │   └── threshold_scan_migration.csv            # Migration threshold scan
     │
-    ├─analysis
-    │      analyze_wallas_phases.py
-    │      benchmark_with_without_detection.py
-    │      run_potential_analysis.py
-    │      run_potential_analysis_en.py
-    │      threshold_scan.py
-    │      __init__.py
+    ├── endo_result/                                # Ring 4: fixpoint detection and concept structure
+    │   ├── endo_summary.csv                        # Cross config/scale/minsize/method summary
+    │   ├── AI对话提示词.txt                        # Saved analysis prompts
+    │   ├── 对数据的分析及其背景.md                 # Data-analysis notes and background
+    │   ├── data_analysis/
+    │   │   └── base_fixpoint_method/
+    │   │       ├── method_B/
+    │   │       │   ├── configA.md
+    │   │       │   ├── configB.md
+    │   │       │   └── configC.md
+    │   │       ├── method_C/
+    │   │       │   ├── configA.md
+    │   │       │   ├── configB.md
+    │   │       │   └── configC.md
+    │   │       └── summary/
+    │   │           ├── method_B.md
+    │   │           ├── method_C.md
+    │   │           └── method_B-C.md
+    │   ├── raw_events_A/raw_compression_events.csv # Raw events for concept set A
+    │   ├── raw_events_B/raw_compression_events.csv # Raw events for concept set B
+    │   ├── raw_events_C/raw_compression_events.csv # Raw events for concept set C
+    │   └── scale{51,71,91,111}/
+    │       ├── config_A/minsize_1/fixpoint_{A,B,C}/
+    │       │   ├── fixpoints.json                  # Fixpoint list (core/support/stability/phi)
+    │       │   ├── concept_structure.json          # Structure definition (boundary/logic/energy/sources)
+    │       │   ├── logic_edges.csv                 # Directed logic edges (core→boundary, logic_strength)
+    │       │   ├── edge_weights.csv                # Multi-channel + high-order-corrected edge weights
+    │       │   └── run_meta.json                   # Run parameters and reproducibility metadata
+    │       ├── config_B/minsize_{1,2,3}/fixpoint_{A,B,C}/  # Same layout, three minsize settings
+    │       │   ├── fixpoints.json
+    │       │   ├── concept_structure.json
+    │       │   ├── logic_edges.csv
+    │       │   ├── edge_weights.csv
+    │       │   └── run_meta.json
+    │       └── config_C/minsize_{1,2,3}/fixpoint_{A,B,C}/  # Same layout, three minsize settings
+    │           ├── fixpoints.json
+    │           ├── concept_structure.json
+    │           ├── logic_edges.csv
+    │           ├── edge_weights.csv
+    │           └── run_meta.json
     │
-    ├─core
-    │      cognitive_graph.py
-    │      cognitive_states.py
-    │      semantic_network.py
-    │      __init__.py
+    ├── four_dim_vectors/                           # Ring 5: 4D continuous concept space
+    │   ├── all_summary.csv                         # Cross config/scale descriptive stats + corr matrix + PCA variance
+    │   ├── config_A/scale{51,71,91,111}.csv        # 4D coords: b, c, g1_z, g2_z, c_norm, g1_norm, g2_norm
+    │   ├── config_A/scale{51,71,91,111}_pca.csv    # PCA decomposition (PC1 = C-axis, var 67–75%)
+    │   ├── config_A/scale{51,71,91,111}_knn.csv    # 4D kNN neighbors
+    │   ├── config_B/scale{51,71,91,111}.csv        # Same as above (concept set B)
+    │   ├── config_B/scale{51,71,91,111}_pca.csv
+    │   ├── config_B/scale{51,71,91,111}_knn.csv
+    │   ├── config_C/scale{51,71,91,111}.csv        # Same as above (concept set C)
+    │   ├── config_C/scale{51,71,91,111}_pca.csv
+    │   ├── config_C/scale{51,71,91,111}_knn.csv
+    │   └── convexity_sweep/                        # Ring 6: convexity test (self-test + holdout)
+    │       ├── grids/                              # Self-test grids (expert hull → evaluate same experts)
+    │       │   ├── grid_ALL.csv
+    │       │   └── grid_{A,B,C}_scale{51,71,91,111}.csv
+    │       ├── pivots/                             # Self-test pivots
+    │       │   ├── pivot_expert_mean_convexity_ratio_{3d,4d}.csv
+    │       │   ├── pivot_expert_max_convexity_ratio_{3d,4d}.csv
+    │       │   ├── pivot_general_outside_fraction_{3d,4d}.csv
+    │       │   ├── pivot_general_mean_convexity_ratio_{3d,4d}.csv
+    │       │   ├── pivot_volume_ratio_{3d,4d}.csv
+    │       │   └── pivot_gof_3d_{A,B,C}.csv
+    │       ├── holdout/
+    │       │   ├── grids/                          # ★ Holdout grids (half experts build hull; eval held-out + general)
+    │       │   │   ├── holdout_ALL.csv
+    │       │   │   └── holdout_{A,B,C}_scale{51,71,91,111}.csv
+    │       │   └── pivots/                         # Holdout pivots
+    │       │       ├── pivot_test_expert_inside_fraction_{3d,4d}.csv
+    │       │       ├── pivot_test_expert_inside_std_{3d,4d}.csv
+    │       │       ├── pivot_general_inside_fraction_{3d,4d}.csv
+    │       │       ├── pivot_general_inside_std_{3d,4d}.csv
+    │       │       ├── pivot_separation_{3d,4d}.csv
+    │       │       ├── pivot_separation_3d_{A,B,C}.csv
+    │       │       ├── pivot_test_expert_mean_ratio_{3d,4d}.csv
+    │       │       └── pivot_general_mean_ratio_{3d,4d}.csv
+    │       └── figures/
+    │           ├── 2d_heatmaps/                    # x=b_lo, y=c_hi, color=metric
+    │           ├── 2d_lines/                       # x=c_hi, line=b_lo
+    │           ├── 3d_surfaces/                    # (c_hi, b_lo) → metric surface
+    │           ├── 4d_density/                     # (b, c) density
+    │           └── cross_config/                   # Fixed b_lo, compare configs
     │
-    ├─emergence
-    │      detector_fixed.py
-    │      metrics.py
-    │      observer.py
-    │      universe.py
-    │      universe_enhanced.py
-    │      __init__.py
+    ├── g1_export/                                  # Auxiliary: G1 energy-graph export (feeds g1_z in four_dim_vectors)
+    │   ├── config_A/scale{51,71,91,111}/
+    │   │   ├── g1_nodes.csv                        # Node-level aggregates: mean_weight / min_weight / weight_drop / traversal_freq
+    │   │   ├── g1_edges.csv                        # G1 edge list (weight / original_weight / traversal_count / similarity)
+    │   │   ├── energy_history.csv                  # Global energy trajectory (iteration, energy)
+    │   │   └── traversal_freq.csv                  # Node traversal frequencies
+    │   ├── config_B/scale{51,71,91,111}/           # Same layout
+    │   └── config_C/scale{51,71,91,111}/           # Same layout
     │
-    ├─experiments
-    │      batch_experiments.py
-    │      emergence_study_fixed.py
-    │      population_study.py
-    │      __init__.py
-    │
-    ├─models
-    │      enhanced_model.py
-    │      qlearning_enhanced.py
-    │      random_network.py
-    │      __init__.py
-    │
-    ├─py_figure_maker
-    │      3D_Graph_show.py
-    │      concept_compress_show2.py
-    │      Graphical_Abstract.py
-    │
-    └─utils
-            analysis.py
-            individual_variation.py
-            visualization.py
-            __init__.py
+    └── six_quadrant_results/                       # Legacy: discrete six-quadrant (superseded by 4D continuous coords)
+        ├── config_A/
+        │   ├── six_quadrant_scale{51,71,91,111}.csv
+        │   └── summary.csv
+        ├── config_B/
+        │   ├── six_quadrant_scale{51,71,91,111}.csv
+        │   └── summary.csv
+        └── config_C/
+            ├── six_quadrant_scale{51,71,91,111}.csv
+            └── summary.csv
