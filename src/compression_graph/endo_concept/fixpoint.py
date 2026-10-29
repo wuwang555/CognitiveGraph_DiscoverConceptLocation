@@ -94,7 +94,21 @@ def stability_scores(events: List[Dict[str, Any]]) -> Dict[str, float]:
 # Detector
 # ====================================================================== #
 class FixpointDetector:
-    """Detect fixpoint clusters with a switchable method (A/B/C/ABC)."""
+    """Detect fixpoint clusters with a switchable method (A/B/C/ABC).
+
+    Semantics after revision:
+        A : all frequent itemsets at or above `fp_min_itemset_size`
+            (support filter only, no lower-bound filter)
+        B : minimal frequent itemsets (support + lower-bound)
+        C : role-consistent minimal frequent itemsets
+            (support + lower-bound + role consistency)
+        ABC : union of the three, each with its own filter
+
+    The lower-bound filter is B's defining operation. It is NOT applied
+    to A, because doing so would collapse A into B (at minsize=1) or
+    silently change A's meaning (at minsize>=2, the lower-bound filter
+    is vacuous anyway since the sub-itemset layer is not enumerated).
+    """
 
     def __init__(self, config: Dict[str, Any]):
         self.cfg = config
@@ -102,27 +116,43 @@ class FixpointDetector:
     # ------------------------------------------------------------------ #
     def detect(self, events: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         method = str(self.cfg.get("fixpoint_method", "A")).upper()
+        use_joint = bool(self.cfg.get("use_joint_criteria", True))
 
         if method == "A":
             raw = self._method_A(events)
+            if use_joint:
+                # ★ A 只做 support 过滤，不做下界过滤
+                raw = self._apply_joint(raw, events, apply_lower_bound=False)
+
         elif method == "B":
             raw = self._method_B(events)
+            if use_joint:
+                raw = self._apply_joint(raw, events, apply_lower_bound=True)
+
         elif method == "C":
             raw = self._method_C(events)
+            if use_joint:
+                raw = self._apply_joint(raw, events, apply_lower_bound=True)
+
         elif method in ("ABC", "ALL", "A+B+C"):
-            raw = self._merge(
-                self._method_A(events),
-                self._method_B(events),
-                self._method_C(events),
-            )
+            # ★ 三个方法各自保留语义后再合并
+            a_raw = self._method_A(events)
+            if use_joint:
+                a_raw = self._apply_joint(a_raw, events, apply_lower_bound=False)
+            b_raw = self._method_B(events)
+            if use_joint:
+                b_raw = self._apply_joint(b_raw, events, apply_lower_bound=True)
+            c_raw = self._method_C(events)
+            if use_joint:
+                c_raw = self._apply_joint(c_raw, events, apply_lower_bound=True)
+            max_fp = int(self.cfg.get("max_fixpoints", 1000))
+            raw = self._merge(a_raw, b_raw, c_raw, max_fp)
+
         else:
             raise ValueError(
                 f"Unknown fixpoint_method: {method!r}. "
                 f"Choose from 'A', 'B', 'C', 'ABC'."
             )
-
-        if self.cfg.get("use_joint_criteria", False):
-            raw = self._apply_joint(raw, events)
 
         raw.sort(key=lambda r: (r["support"], len(r["core"])), reverse=True)
         return raw
@@ -304,15 +334,23 @@ class FixpointDetector:
         return items[:max_fp]
 
     # ================================================================== #
-    # Optional joint post-filter (default OFF)
+    # Joint post-filter (support + optional stability + optional lower-bound)
     # ================================================================== #
     def _apply_joint(self,
                      candidates: List[Dict[str, Any]],
-                     events: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Optional post-filter: support + stability + lower-bound.
+                     events: List[Dict[str, Any]],
+                     apply_lower_bound: bool = True) -> List[Dict[str, Any]]:
+        """Uniform post-filter.
 
-        Only runs when `use_joint_criteria` is True. Since each method
-        already has its own filter, this should normally stay off.
+        Stage 1: enrich with support + stability
+        Stage 2: support hard threshold
+        Stage 3: stability hard threshold (optional, controlled by
+                 use_stability_hard_threshold)
+        Stage 4: lower-bound filter (only if apply_lower_bound=True)
+
+        For method A, `apply_lower_bound` is passed as False — A's
+        semantics are "all frequent itemsets at this granularity",
+        not "minimal frequent itemsets".
         """
         if not candidates:
             return []
@@ -320,17 +358,39 @@ class FixpointDetector:
         min_support = float(self.cfg.get("joint_support_min", 0.02))
         min_stability = float(self.cfg.get("joint_stability_min", 0.6))
         use_stab_hard = bool(self.cfg.get("use_stability_hard_threshold", False))
-        use_lower_bound = bool(self.cfg.get("use_lower_bound_filter", True))
         max_fp = int(self.cfg.get("max_fixpoints", 1000))
 
+        # ---- Stage 1: enrich (recompute support against the full
+        #      transaction set, so that support is consistent across
+        #      methods) ----
+        transactions = events_to_transactions(events)
+        N = max(1, len(transactions))
+        stab = stability_scores(events)
+
+        enriched: List[Dict[str, Any]] = []
+        for c in candidates:
+            s = frozenset(c["core"])
+            cnt = sum(1 for t in transactions if s.issubset(t))
+            support = cnt / N
+            mean_stab = float(np.mean([stab.get(m, 0.5) for m in s]))
+            enriched.append({
+                "core": list(s),
+                "support": support,
+                "count": cnt,
+                "stability": mean_stab,
+                "method": c.get("method", "?"),
+            })
+
+        # ---- Stage 2 + 3: support (hard) + optional stability (hard) ----
         if use_stab_hard:
-            passing = [c for c in candidates
+            passing = [c for c in enriched
                        if c["support"] >= min_support
                        and c["stability"] >= min_stability]
         else:
-            passing = [c for c in candidates if c["support"] >= min_support]
+            passing = [c for c in enriched if c["support"] >= min_support]
 
-        if not use_lower_bound:
+        # ---- Stage 4: lower-bound filter (optional) ----
+        if not apply_lower_bound:
             passing.sort(key=lambda c: (c["support"], c["stability"]),
                          reverse=True)
             return passing[:max_fp]

@@ -5,10 +5,13 @@ Configuration for the endo-concept generation module.
 All thresholds are absolute so scales remain comparable. The fixpoint
 detection method is switchable via `fixpoint_method`:
 
-    "A"  - frequent itemset mining (Apriori-style enumeration)
-    "B"  - containment lattice (lower-bound elements)
-    "C"  - role-consistency analysis
-    "ABC"/"ALL" - union of A, B, C
+    # ---------- Fixpoint detection method selection ----------
+    # "A" : all frequent itemsets at or above fp_min_itemset_size
+    #       (support only, NO lower-bound filter)
+    # "B" : minimal frequent itemsets (support + lower-bound)
+    # "C" : role-consistent minimal frequent itemsets
+    #       (support + lower-bound + role consistency)
+    # "ABC": union of the three
 
 `run_endo.py` iterates over `fixpoint_methods` and `min_itemset_sizes`
 to produce a full grid of results.
@@ -27,7 +30,7 @@ ENDO_CONCEPT_CONFIG = {
     "min_itemset_sizes": [1, 2, 3],
 
     # ---------- Method A: frequent itemset mining ----------
-    "fp_min_support": 0.02,
+    "fp_min_support": 0.1,
     "fp_max_itemset_size": 8,
     "fp_min_itemset_size": 1,      # default; overridden by min_itemset_sizes
 

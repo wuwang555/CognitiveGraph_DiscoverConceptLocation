@@ -1,0 +1,12 @@
+{
+  "scale": 51,
+  "config_method": "A",
+  "minsize": 2,
+  "fixpoint_method": "A",
+  "n_events": 939,
+  "n_fixpoints": 159,
+  "n_logic_edges": 456,
+  "n_structure_entries": 159,
+  "phi_mean": 1.2387080701680573,
+  "phi_std": 0.26034911721460907
+}

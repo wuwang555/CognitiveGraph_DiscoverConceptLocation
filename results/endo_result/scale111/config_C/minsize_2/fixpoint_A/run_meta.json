@@ -4,9 +4,9 @@
   "minsize": 2,
   "fixpoint_method": "A",
   "n_events": 577,
-  "n_fixpoints": 123,
-  "n_logic_edges": 560,
-  "n_structure_entries": 123,
-  "phi_mean": 1.032608637500196,
-  "phi_std": 0.4415335059069497
+  "n_fixpoints": 143,
+  "n_logic_edges": 553,
+  "n_structure_entries": 143,
+  "phi_mean": 1.3766030873352815,
+  "phi_std": 0.3040421190475347
 }

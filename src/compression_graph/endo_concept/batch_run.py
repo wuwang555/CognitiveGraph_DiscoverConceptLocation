@@ -46,7 +46,7 @@ def _run(cmd, cwd, env):
 
 
 def main():
-    config_methods = ["C"]
+    config_methods = ["A","B","C"]
 
     base_env = os.environ.copy()
     base_env["PYTHONHASHSEED"] = "0"       # 固定 set/frozenset 迭代顺序
