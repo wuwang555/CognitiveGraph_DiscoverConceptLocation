@@ -1,11 +1,12 @@
 # CognitiveGraph_DiscoverConceptLocation
 # Cognitive Graph Theory: From Second-Order Observation to a Four-Dimensional Concept Space
 
-> This project builds upon the first-order cognitive graph model from *The Geometry, Algebra, and Dynamics of Cognition: A Unified Graph Theory Model Based on the Principle of Minimum Energy Consumption* (hereinafter referred to as "the original paper"), constructing a **second-order observation layer** on top of it: identifying stable structures from the system's spontaneously generated concept compression events, mapping them into a continuous four-dimensional concept space, and performing an operational test of the empirical hypothesis that "concept regions are convex."
+> This project builds upon the first-order cognitive graph model from *The Geometry, Algebra, and Dynamics of Cognition: A Unified Graph Theory Model Based on the Principle of Minimum Energy Consumption* (hereinafter referred to as "the original paper"), constructing a **second-order observation layer** on top of it.
+> **The second-order observation layer is specifically defined as**: the layer that does not modify the operating rules of the first-order system, but performs secondary statistics, structure identification, and coordinate mapping on the outputs of the first-order system (compression events, traversal records), and records the observation results as traceable data objects.
 >
 > The tone of this project is consistent with the original paper: **we do not pursue fitting, only computability**. Each stage explicitly declares "what this stage does" and "what this stage observes," and annotates boundaries at the conclusions.
 >
-> This repository focuses only on **capturing the essentials**: identifying the stable units that the system repeatedly attends to from compression events, and assigning them structured definitions. It does not do what another project does—"making fixpoints into new nodes, constructing higher-level graphs, then compressing/migrating to reduce hierarchy." Although the module name `endo_concept` is called "endogenous concept generation," within the scope of this repository it is still capturing the essentials, not constructing a concept-generation graph.
+> This repository focuses only on **capturing the essentials**. **Capturing the essentials is specifically defined as**: identifying the stable units that the system repeatedly attends to from compression events, and assigning them structured definitions; it does not construct higher-level graphs, nor does it turn fixpoints into new nodes and then compress/migrate to reduce hierarchy. Although the module name `endo_concept` is called "endogenous concept generation," within the scope of this repository it is still capturing the essentials, not constructing a concept-generation graph.
 
 ---
 
@@ -13,7 +14,7 @@
 
 Before we begin, let us draw the boundaries. This project **does not** do the following:
 
-- **Does not do concept generation**. What this project does is "capturing the essentials"—identifying the minimal stable units (fixpoints) that the system repeatedly attends to from compression events, and assigning them structured definitions. True "concept generation" (making fixpoints into new nodes, constructing higher-level graphs) belongs to subsequent work and is outside the scope of this project.
+- **Does not do concept generation**. **Concept generation is specifically defined as**: the set of operations that treat fixpoints as new nodes, construct higher-level graphs, then compress/migrate on the new graphs, thereby "reducing hierarchy." This project does not perform this set of operations; this project only identifies stable units (fixpoints) from compression events and assigns them structured definitions.
 - **Does not do engineering modifications**. No pruning, percentile thresholds, community detection, or cost mapping are applied to the first-order system. All thresholds remain absolute values, all relations remain as-is, and all multi-granularity outputs (subsets, paths, repetitions) are preserved.
 - **Does not do empirical fitting**. This project does not compare with human behavioral data or brain imaging data. Its positioning is a **thought experiment platform**—providing a "possible world" and observing what it produces.
 
@@ -55,17 +56,17 @@ Below we explain each stage in turn.
 
 ### 3.1 What This Stage Does
 
-After the first-order system `universe.py` runs for 10,000 iterations, it naturally produces "concept compression" events—whenever it discovers a set of tightly related concepts, it records them as a unit. Each compression is a record: `(center, {related_nodes})`.
+After the first-order system `universe.py` runs for 10,000 iterations, it naturally produces "concept compression" events. **A concept compression event is specifically defined as**: a record `(center, {related_nodes})` that the system records in a certain detection—it indicates that "these concepts were treated together as one unit by the system in this detection."
 
-This stage aggregates these events into an **undirected weighted graph G2**:
+This stage aggregates these events into an **undirected weighted graph G2**. **The G2 relation graph is specifically defined as**:
 
 - Nodes = concepts
-- Edges = "these two concepts appeared together in a compression event"
+- Edges = "these two concepts once appeared together in a compression event"
 - Edge weights = co-occurrence count (clique mode: all unordered pairs within one compression event get +1, no normalization)
 
 **Why undirected**: In a single static context, we cannot determine whether a compression is "center → members" or "members → center." The system only records the fact that "these concepts were compressed together." Directionality is deferred to Stage 4, derived from fixpoints.
 
-**Why clique rather than star**: Multi-granularity compression is the system's真实 output. A compression of 5 concepts produces 10 edges, not 4. This is not redundancy; it is fidelity.
+**Why clique rather than star**: Multi-granularity compression is the system's true output. A compression of 5 concepts produces 10 edges, not 4. This is not redundancy; it is fidelity.
 
 ### 3.2 What This Stage Observes
 
@@ -95,11 +96,11 @@ Taking scale 111 as an example:
 
 ### 4.1 What This Stage Does
 
-Two types of detection **fully consistent with the original paper** are performed on G2:
+Two types of detection **fully consistent with the original paper** are performed on G2.
 
-**Compression detection**: For each node as center, take its top-k neighbors to form a cluster, compute compression potential Φ = internal mean co-occurrence / external mean co-occurrence. When Φ exceeds an absolute threshold, it is recorded as a compression candidate.
+**Compression detection is specifically defined as**: for each node as center, take its top-k neighbors to form a cluster, compute compression potential `Φ = internal mean co-occurrence / external mean co-occurrence`; when `Φ` exceeds an absolute threshold, it is recorded as a compression candidate. `Φ` is a ratio of edge-weight structure, not a semantic judgment of "degree of concept merging."
 
-**Migration detection**: Generate traversal histories through hard traversal + soft traversal; when the average co-occurrence count along a path exceeds an absolute threshold, it is recorded as a migration candidate.
+**Migration detection is specifically defined as**: generate traversal histories through hard traversal + soft traversal; when the average co-occurrence count along a path exceeds an absolute threshold, it is recorded as a migration candidate. Migration is an observation of "path cost structure," not an assertion that "the principle has really migrated."
 
 **Why thresholds are absolute values**: For cross-scale comparability. No percentiles, no relative thresholds. The thresholds for scale 51 and scale 111 are the same.
 
@@ -128,7 +129,7 @@ Taking scale 111 as an example:
 
 ### 5.1 What This Stage Does
 
-This stage is a **distribution-level verification** of the outputs from Stages 1–2. It reproduces the objective metrics from §7.8 / §7.10 of the original paper, but **the object of application has shifted**: the original paper's Zipf is "center node frequency," while this project's Zipf is "edge co-occurrence frequency." This shift is deliberate—it tests "whether the relation graph itself also obeys Zipf."
+This stage is a **distribution-level statistical verification** of the outputs from Stages 1–2. **Distribution-level statistical verification is specifically defined as**: not judging whether a single candidate is "right or wrong," but only testing whether the edge-weight/event distributions from which the candidates come exhibit the overall regularities reported in the original paper (power law, Zipf, Φ distribution, threshold sensitivity). It reproduces the objective metrics from §7.8 / §7.10 of the original paper, but **the object of application has shifted**: the original paper's Zipf is "center node frequency," while this project's Zipf is "edge co-occurrence frequency." This shift is deliberate—it tests "whether the relation graph itself also obeys Zipf."
 
 Four types of metrics:
 
@@ -165,10 +166,7 @@ Four types of metrics:
 
 **This is the turning point of the entire project**. The first three stages do "statistics"; Stage 4 begins **making statistical units explicit**.
 
-**Fixpoint** = a **stable unit** identified from compression events. It satisfies:
-- Sufficiently frequent in events (high support)
-- Indivisible (no more frequent proper subset)
-- Stable member roles (high role consistency)
+**A fixpoint is specifically defined as**: a stable unit identified from compression events that satisfies the following three conditions—(i) sufficiently frequent in events (high support); (ii) indivisible (no more frequent proper subset); (iii) stable member roles (high role consistency). A fixpoint is a **set**, not a node on a graph; its directionality exists only in `logic` (core→boundary), not in the set itself.
 
 This stage provides **three independent fixpoint detection methods**, sharing the same power set enumeration but with completely independent filtering rules and parameters:
 
@@ -269,7 +267,7 @@ The C/B ratios of the three concept sets exhibit three different trajectories:
 
 The fixpoints output by Stage 4 are **discrete labels** ("this belongs to C, that belongs to B−C"). But discrete labels have a fundamental problem: **boundaries cannot be handled**. If a concept "sometimes acts as center and sometimes as member," is it C or B−C? What is the difference between thresholds 0.7 and 0.71?
 
-This stage replaces discrete labels with **four-dimensional continuous coordinates**:
+This stage replaces discrete labels with **four-dimensional continuous coordinates**. **The four-dimensional concept space is specifically defined as**: the coordinate representation obtained by mapping each fixpoint onto four continuous coordinates `(b, c, g1, g2)`; it is not a new physical space, but the continuous unfolding of the original discrete criteria.
 
 | Dimension | Meaning | Source |
 |------|------|------|
@@ -321,7 +319,7 @@ The first five stages are all within the framework of the original paper. Stage 
 
 Gärdenfors's concept space theory claims that "concept regions are convex." This claim has undergone a key shift in the literature: from "necessary constraint" to "testable prediction." Gärdenfors himself explicitly states: "The convexity criterion is not proposed as something that must necessarily hold for some application, but as a testable prediction. If it were guaranteed to hold, it would have no empirical content."
 
-This project grounds this "testable prediction" in the four-dimensional concept space. **Two types of tests**:
+This project grounds this "testable prediction" in the four-dimensional concept space. **Convexity testing is specifically defined as**: building a convex hull with one part of the points and testing positions with another part, outputting two reproducible numbers—"fraction inside the convex hull" and "separation"; it does not judge "whether concept regions are convex in essence," but only provides the conditional spectrum of "under what conditions, for which point sets, and with what strength convexity approximately holds." **Two types of tests**:
 
 **Self-test version**: Build a convex hull using expert points, then test expert points against themselves. Outputs:
 - `expert_mean_convexity_ratio` (average distance ratio of expert points to their own convex hull)
@@ -335,7 +333,7 @@ This project grounds this "testable prediction" in the four-dimensional concept 
 
 **Why two versions are needed**: All "approximately 1.0" values in the self-test version are **reflexivity of the convex hull definition** (building a convex hull with experts and testing experts against themselves necessarily yields ≤ 1.0). `general_outside_fraction = 1.0` is a **necessary consequence of c-axis mutual exclusivity**. **Only the holdout version is a true test.**
 
-**Why both 4D and 3D modes**: 4D includes the c dimension; experts and general points are mutually exclusive along the c axis, so the convex hulls necessarily do not intersect. After removing the c axis (3D mode `(b, g1, g2)`), the two have the possibility of geometric overlap, and `general_inside` has its first chance to be non-zero.
+**Why both 4D and 3D modes**: 4D includes the c dimension; experts and general points are mutually exclusive along the c axis, so the convex hulls necessarily do not intersect. After removing the c axis (3D mode `(b, g1, g2)`), the two have the geometric possibility of overlap, and `general_inside` has its first chance to be non-zero.
 
 ### 8.2 What This Stage Observes
 
@@ -351,7 +349,7 @@ This project grounds this "testable prediction" in the four-dimensional concept 
 
 **Core conclusions of the holdout method**:
 
-- **The expert layer is not strictly convex**. After holding out half, only 20%–35% of the other half falls inside the training convex hull. This is not "non-convex" (non-convex would be ≈ 0), nor "strictly convex" (strictly convex would be ≈ 1); it is **approximately convex** or **star-shaped approximation**.
+- **The expert layer is not strictly convex**. After holding out half, only 20%–35% of the other half falls inside the training convex hull. This is not "non-convex" (non-convex would be ≈ 0), nor "strictly convex" (strictly convex would be ≈ 1); it is **approximately convex** or **star-shaped approximation**. **Star-shaped approximation is specifically defined as**: there exists a core point such that the line segment from that point to any point in the set lies within the set; it is weaker than "convex," allowing the set to have "inward concave" boundaries but not "outward broken" gaps.
 - **The general layer partially mixes into the convex hull**. At b=0.02/0.05, about 20% of general points fall inside the expert convex hull. This indicates that the "expert vs. general" dichotomy is **not a hard boundary but a gradient band** geometrically.
 - **Separation 0.07–0.38**. According to the previously set `separation > 0.5 strong separation`, no group reaches it. But `separation > 0.2` generally holds at b=0.0.
 
@@ -405,7 +403,7 @@ Provides data for Stage 5's `g1_z`. G1 is a fully connected energy graph; a node
 
 ### 9.2 Six Quadrants (`six_quadrant_results/`, historical)
 
-The six quadrants are an **intermediate product of the project's methodological evolution**. It divides each concept into six discrete quadrants by `(G1 strong/weak, G2 strong/weak, in_B, in_C)` (meta-concept/general layer/expert layer/compression product/background path/background catalog).
+The six quadrants are an **intermediate product of the project's methodological evolution**. **The six quadrants are specifically defined as**: the classification result that divides each concept into six discrete boxes (meta-concept / general layer / expert layer / compression product / background path / background catalog) by `(G1 strong/weak, G2 strong/weak, in_B, in_C)`; it is an early version of discrete labels, not a new graph structure.
 
 **It exposed the fundamental problem of discretization**: A@111's principles (transformation, iteration, abstraction) are neither in the meta-concept quadrant (because they are in B/C) nor in the expert layer quadrant (because G2 is negative), falling into "unclassified." **Meta-concepts falling into "unclassified" is not a classification failure; it is that the discrete boxes are insufficient.**
 

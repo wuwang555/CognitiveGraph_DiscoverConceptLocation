@@ -2,30 +2,34 @@
 
 This module **does not modify** any postulate of the original paper, nor does it change the behavior of `CognitiveUniverseEnhanced`. It does only one thing: aggregate the **concept compression events** produced by the original system into an **undirected weighted graph**, and then, on this graph, use detection mechanisms consistent with the original paper to detect **compression candidates** and **migration candidates**.
 
+**The second-order observation layer is specifically defined as**: the layer that does not modify the operating rules of the first-order system, but performs secondary statistics, structure identification, and candidate detection on the outputs (compression events) of the first-order system, and records the results as traceable data objects.
+
 ## Core Ideas
 
+- **A concept compression event is specifically defined as**: a record `(center, {members})` that the system records in a certain detection, indicating that "these concepts were treated together as one unit by the system in this detection."
 - A compression event `(center, {members})` is treated as an undirected clique; the co-occurrence count of every unordered pair within the clique is incremented by 1.
+- **The compression association graph is specifically defined as**: a graph with concepts as nodes, "once appeared together in a compression event" as undirected edges, and co-occurrence count as edge weight.
 - The graph is **undirected**. Because in a single static context, we cannot determine whether a compression is "center → members" or "members → center." The system only records the fact that "these concepts were compressed together."
 - Edge weight = **raw co-occurrence count**. No mapping, no cost, no normalization.
-- Detection mechanisms are consistent with the original paper:
-  - **Migration**: First generate traversal histories through hard traversal and soft traversal; when the average co-occurrence count along a path exceeds an **absolute threshold**, it is recorded as a migration candidate.
-  - **Compression**: For each node as center, take its top-k neighbors to form a cluster; compression potential Φ = internal mean co-occurrence / external mean co-occurrence; when it exceeds an **absolute threshold**, it is recorded as a compression candidate.
-- The detection results are **candidate concepts**; in a single static context they cannot be externally calibrated, so they are only statistical hypotheses.
+- The detection mechanisms are consistent with the original paper:
+  - **A migration candidate is specifically defined as**: first, traversal histories are generated through hard traversal and soft traversal; when the average co-occurrence count of a path exceeds an **absolute threshold**, it is recorded as a migration candidate. **Hard traversal / soft traversal are specifically defined as**: two traversal modes that advance deterministically / randomly along edge weights in the sense of the original paper; this module does not change their rules and only reuses their outputs.
+  - **A compression candidate is specifically defined as**: for each node as center, take its top-k neighbors to form a cluster; the compression potential `Φ = internal mean co-occurrence / external mean co-occurrence`; when it exceeds an **absolute threshold**, it is recorded as a compression candidate. `Φ` is a ratio of edge-weight structure, not a semantic judgment of "degree of concept merging."
+- **A candidate concept is specifically defined as**: the collective name for the above two types of candidates; it is a statistical hypothesis given by the detector on the edge-weight structure, not a validated concept. In a single static context, they cannot be externally calibrated, so they are only statistical hypotheses.
 
-**Relationship with Method A**: This module's `candidate_compressions.csv` contains compression candidates detected by Φ, not Method A's frequent itemset output. Method A's `fixpoints.json` is the frequent itemset closure obtained by enumerating `size=minsize..8` on `raw_compression_events.csv` under `support ≥ fp_min_support`.
+**Relationship to Method A**: The `candidate_compressions.csv` of this module contains compression candidates detected by Φ, not the frequent itemset outputs of Method A. Method A's `fixpoints.json` is the frequent itemset closure obtained by enumerating `size=minsize..8` on `raw_compression_events.csv` under `support ≥ fp_min_support`.
 
-- Method A's `size=1` outputs are atomic fixpoint candidates;
-- Method A's `size>1` outputs are high-frequency whole candidates at the raw event level, carrying `phi`, but they are not indivisible atoms;
-- The `phi` in this module's `candidate_compressions.csv` is the compression potential of a "compression candidate cluster," which is not the same layer of data as Method A's itemset `phi`; they cannot be directly mixed.
+- Method A's `size=1` are atomic fixpoint candidates;
+- Method A's `size>1` are high-frequency whole candidates at the raw event level, carrying `phi`, but they are not indivisible atoms;
+- The `phi` in this module's `candidate_compressions.csv` is the compression potential of a "compression candidate cluster," and is not the same layer of data as Method A's itemset `phi`; the two cannot be directly mixed.
 
 ## Why the Design Is So Simple
 
-- **Absolute thresholds**: No percentiles, so different scales are comparable.
-- **No pruning**: Search is performed on the complete graph, consistent with the original paper.
-- **No community detection**: That is not a mechanism of the original paper.
-- **No cost mapping**: Edge weights are co-occurrence counts, not translated into energy.
-- **No improvement ratio**: The original paper's migration criterion does not include this term.
-- **No subset/path deduplication**: In reality, compression is inherently multi-granular; preserving subset relations is closer to the true cognitive state in a static context.
+- **Absolute thresholds**: no percentiles, so different scales are comparable.
+- **No pruning**: search is performed on the complete graph, consistent with the original paper.
+- **No community detection**: that is not the mechanism of the original paper.
+- **No cost mapping**: edge weight is just co-occurrence count, not translated into energy.
+- **No improvement ratio**: the original paper's migration criterion does not include this term.
+- **No subset/path deduplication**: in reality, compression is inherently multi-granular; preserving subset relations is closer to the true cognitive state in a static context.
 
 ## Entry Point
 
@@ -38,17 +42,17 @@ Under the `results/compression_graph/` directory:
 - `pipeline_scale{N}.json` — complete analysis for each scale
 - `graph_scale{N}.png` — compression association graph
 - `edge_dist_scale{N}.png` — edge co-occurrence distribution
-- `migrations_scale{N}.png` — top migration paths highlighted
+- `migrations_scale{N}.png` — top migration path highlights
 
 CSV tables:
 
-- `summary.csv`                   — per-scale summary
+- `summary.csv`                   — summary per scale
 - `raw_compression_events.csv`    — raw compression events
 - `compression_edges.csv`         — each edge of the compression association graph
 - `candidate_compressions.csv`    — compression candidates (candidate concepts — compression type)
 - `candidate_migrations.csv`      — migration candidates (candidate concepts — migration type)
 
-### Table Fields
+### Fields of Each Table
 
 **summary.csv**
 
@@ -68,12 +72,12 @@ CSV tables:
 | Column | Meaning |
 |----|------|
 | `scale` | Concept scale |
-| `event_id` | Event ID |
+| `event_id` | Event index |
 | `detection_iteration` | Iteration step at which detection occurred |
 | `center` | Center node selected by the detector |
 | `cluster_size` | Cluster size |
 | `related_nodes` | Related nodes (pipe-separated) |
-| `emergence_strength` | Composite strength given by the original detector |
+| `emergence_strength` | Comprehensive strength given by the original detector |
 
 **compression_edges.csv**
 
@@ -89,7 +93,7 @@ CSV tables:
 | Column | Meaning |
 |----|------|
 | `scale` | Concept scale |
-| `rank` | Rank by Φ in descending order |
+| `rank` | Rank in descending order of Φ |
 | `center` | Center node |
 | `cluster` | All concepts in the cluster (pipe-separated) |
 | `size` | Cluster size |
@@ -100,16 +104,16 @@ CSV tables:
 | Column | Meaning |
 |----|------|
 | `scale` | Concept scale |
-| `rank` | Rank by mean co-occurrence in descending order |
-| `length` | Number of path nodes |
+| `rank` | Rank in descending order of mean co-occurrence |
+| `length` | Number of nodes in the path |
 | `start` | Start point |
 | `end` | End point |
 | `path` | Full path (arrow-separated) |
-| `score` | Mean co-occurrence count along the path |
+| `score` | Mean co-occurrence count of the path |
 
-## Relationship with the Original Paper
+## Relationship to the Original Paper
 
-| Original Paper | This Module |
+| Original paper | This module |
 |--------|--------|
 | Energy on the cognitive graph | Co-occurrence count on the compression graph |
 | Hard traversal / soft traversal | Hard traversal / soft traversal on the compression graph |
@@ -120,7 +124,7 @@ CSV tables:
 
 ## Important Notes
 
-- Candidates are **hypotheses**, not verified concepts. In a single static context they cannot be externally calibrated; they require manual review, naming, or downstream task validation.
-- Method A's `size>1` frequent itemsets are likewise "high-frequency whole candidates," not "already generated new concepts." They have the `core/boundary/logic/energy/phi` structure and can be written as composite concept cards, but they necessarily contain frequent proper subsets, so they are not indivisible atoms.
+- Candidates are **hypotheses**, not validated concepts. In a single static context, they cannot be externally calibrated and require manual review, naming, or downstream task testing.
+- Method A's `size>1` frequent itemsets are likewise "high-frequency whole candidates," not "already generated new concepts." They have the `core/boundary/logic/energy/phi` structure and can be written as **composite concept cards**. **A composite concept card is specifically defined as**: a structured record that writes a multi-concept whole according to the fields `core/boundary/logic/energy/phi`; it indicates that "this whole repeatedly appears in raw events," not that "it has been reduced in hierarchy into a new node." It necessarily contains frequent proper subsets, so it is not an indivisible atom.
 - This module **does not backfill** the original paper's graph. Backfilling (outputs of Graph 2 entering Graph 1) belongs to the dynamic version and will be delivered later; the `endo_concept` in this repository also does not do this—it still only does "capturing the essentials."
-- This module **does not** perform any "engineering" simplification: no pruning, no percentile thresholds, no community detection, no cost mapping, no improvement ratio. These decisions are made to maintain consistency with the original paper's simplicity and to faithfully present the assumption of "no external calibration in a static context" in the data.
+- This module **does not** perform any "engineering" simplification: no pruning, no percentile thresholds, no community detection, no cost mapping, no improvement ratio. These decisions are made to maintain consistency with the original paper's simplicity, and also to let the assumption "no external calibration in a static context" be faithfully presented in the data.
